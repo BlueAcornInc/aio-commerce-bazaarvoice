@@ -96,6 +96,10 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
             <Heading level={1}>Bazaarvoice Config Editor</Heading>
             <Content marginBottom="size-200">{statusMsg}</Content>
             <Form maxWidth="size-6000">
+                {/* General Configuration Section */}
+                <Heading level={2} marginTop="size-200" marginBottom="size-100">
+                    General Configuration
+                </Heading>
                 <Picker
                     label="Enable Bazaarvoice Extension"
                     selectedKey={enableExtension}
@@ -152,6 +156,11 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
                     <Item key="yes">Yes</Item>
                     <Item key="no">No</Item>
                 </Picker>
+
+                {/* Feed Section */}
+                <Heading level={2} marginTop="size-200" marginBottom="size-100">
+                    Feed
+                </Heading>
                 <TextField
                     label="SFTP Username"
                     value={sftpUsername}
