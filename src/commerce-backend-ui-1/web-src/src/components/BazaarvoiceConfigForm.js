@@ -93,7 +93,6 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
 
     return (
         <View padding="size-250">
-            <Heading level={1}>Bazaarvoice Config Editor</Heading>
             <Content marginBottom="size-200">{statusMsg}</Content>
             <Form maxWidth="size-6000">
                 {/* General Configuration Section */}
