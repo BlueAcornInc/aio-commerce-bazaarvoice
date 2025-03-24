@@ -8,15 +8,16 @@ First generate the encryption keys. In your terminal in root directory of this a
 
 `aio app use`
 
+Generate the encryption keys and store them in the .env file.
+
 Encryption Key:
 
-`openssl rand -hex 32`
+`echo "ENCRYPTION_KEY=$(openssl rand -hex 32)" > .env`
 
 IV Key:
 
-`openssl rand -hex 16`
+`echo "ENCRYPTION_IV=$(openssl rand -hex 16)" > .env`
 
-Put these in the .env file. 
 
 Run the local test of your app:
 `aio app run`
