@@ -31,25 +31,24 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
     useEffect(() => {
         async function loadConfig() {
             try {
-                const resp = await fetch(actionUrl);
+                const resp = await fetch(`${actionUrl}api-get-config`);
                 if (!resp.ok) throw new Error(`GET failed: HTTP ${resp.status}`);
                 const data = await resp.json();
-                console.log("Fetched config:", data);
-                if (data.config) {
-                    setEnableExtension(data.config.enableExtension || "no");
-                    setEnvironment(data.config.environment || "staging");
-                    setClientName(data.config.clientName || "");
-                    setEnableProductFamilies(data.config.enableProductFamilies || "no");
-                    setDeploymentZone(data.config.deploymentZone || "Main Site");
-                    setLocale(data.config.locale || "");
-                    setCloudSeoKey(data.config.cloudSeoKey || "");
-                    setEnableBvPixel(data.config.enableBvPixel || "no");
-                    setDebug(data.config.debug || "no");
-                    setSftpUsername(data.config.sftpUsername || "");
-                    setSftpPassword(data.config.sftpPassword || "");
-                    setSftpHostName(data.config.sftpHostName || "");
-                    setProductFeedFilename(data.config.productFeedFilename || "");
-                    setProductFeedExportPath(data.config.productFeedExportPath || "");
+                if (data) {
+                    setEnableExtension(data.enableExtension || "no");
+                    setEnvironment(data.environment || "staging");
+                    setClientName(data.clientName || "");
+                    setEnableProductFamilies(data.enableProductFamilies || "no");
+                    setDeploymentZone(data.deploymentZone || "Main Site");
+                    setLocale(data.locale || "");
+                    setCloudSeoKey(data.cloudSeoKey || "");
+                    setEnableBvPixel(data.enableBvPixel || "no");
+                    setDebug(data.debug || "no");
+                    setSftpUsername(data.sftpUsername || "");
+                    setSftpPassword(data.sftpPassword || "");
+                    setSftpHostName(data.sftpHostName || "");
+                    setProductFeedFilename(data.productFeedFilename || "");
+                    setProductFeedExportPath(data.productFeedExportPath || "");
                 }
                 setStatusMsg("Config loaded successfully");
             } catch (err) {
@@ -79,7 +78,7 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
         };
 
         try {
-            const resp = await fetch(actionUrl, {
+            const resp = await fetch(`${actionUrl}api-store-config`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
