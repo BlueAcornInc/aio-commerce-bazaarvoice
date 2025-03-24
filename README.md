@@ -1,4 +1,33 @@
 # Local setup
+## Without Magento Adobe Commerce: 
+The easiest way to develop your code and test it. You can work assuming your Admin SDK menu inside Adobe Commerce works and loads the form. You do not need to run this inside the Commerce container.
+
+First generate the encryption keys. In your terminal in root directory of this app run:
+
+`aio auth:login`
+
+`aio app use`
+
+Encryption Key:
+
+`openssl rand -hex 32`
+
+IV Key:
+
+`openssl rand -hex 16`
+
+Put these in the .env file. 
+
+Run the local test of your app:
+`aio app run`
+
+This deploys the runtime functions in Adobe cloud and the local form instance consumes it. 
+
+Visit https://localhost:9080
+to see the form in action.
+
+## With Adobe Commerce
+
 You need the following prerequisites to test on local:
 
 - https://localhost:8443 AC instance up and running using the evergreen repo
