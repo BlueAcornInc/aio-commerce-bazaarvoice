@@ -26,11 +26,18 @@ async function main(params) {
       body: config
     };
   } catch (error) {
+    if (error.code === 'ERROR_FILE_NOT_EXISTS' || error.code === 'ENOENT') {
+      logger.info('No configuration file found, returning empty config.');
+      return {
+        statusCode: 200,
+        body: {}
+      }
+    }
     logger.error(`Error retrieving configuration from ${filePath}:`, error);
     return {
       statusCode: 500,
       body: { error: 'Failed to retrieve and decrypt configuration.' }
-    };
+    }
   }
 }
 
