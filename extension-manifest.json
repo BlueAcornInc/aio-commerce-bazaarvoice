@@ -1,0 +1,8 @@
+{
+  "name": "BazaarVoice",
+  "displayName": "Bazaar Voice",
+  "description": "Bazaar Voice App Builder",
+  "platform": "web",
+  "id": "bazaar-voice",
+  "version": "1.0.0"
+}
