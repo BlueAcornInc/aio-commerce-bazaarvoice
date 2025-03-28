@@ -1,101 +1,88 @@
-const { Core } = require("@adobe/aio-sdk");
-const stateLib = require("@adobe/aio-lib-state");
-const { MAX_TTL } = stateLib;
+/*
+Copyright 2025 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0.
+*/
+const { Core } = require('@adobe/aio-sdk');
 
+/**
+ * Returns a JSON response with an error message
+ */
+function errorResponse(message, statusCode = 400) {
+    return {
+        statusCode,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            success: false,
+            error: message
+        })
+    };
+}
+
+/**
+ * Main function
+ */
 async function main(params) {
-    const logger = Core.Logger("bazaarvoice-config", { level: "info" });
+    const logger = Core.Logger('bazaarvoice-config', { level: params.LOG_LEVEL || 'info' });
 
-    if (params.__ow_method === "post") {
-        const {
-            enableExtension,
+    try {
+        logger.debug('Raw params:', params);
+
+        // Only handle GET requests
+        if (params.__ow_method !== 'get') {
+            logger.warn('Unsupported HTTP method:', params.__ow_method);
+            return errorResponse('Method Not Allowed. Only GET is supported.', 405);
+        }
+
+        // Fetch config from environment variables
+        const enableExtension = String(params.ENABLE_EXTENSION).toLowerCase() === 'true';
+        const environment = params.ENVIRONMENT || 'staging';
+        const clientName = params.CLIENT_NAME || '';
+        const enableProductFamilies = String(params.ENABLE_PRODUCT_FAMILIES).toLowerCase() === 'true';
+        const deploymentZone = params.DEPLOYMENT_ZONE || 'Main Site';
+        const locale = params.LOCALE || '';
+        const cloudSeoKey = params.CLOUD_SEO_KEY || '';
+        const enableBvPixel = String(params.ENABLE_BV_PIXEL).toLowerCase() === 'true';
+        const debug = String(params.DEBUG).toLowerCase() === 'true';
+        const sftpUsername = params.SFTP_USERNAME || '';
+        const sftpPassword = params.SFTP_PASSWORD || '';
+        const sftpHostName = params.SFTP_HOSTNAME || '';  // Adjusted to match envKey
+        const productFeedFilename = params.PRODUCT_FEED_FILENAME || '';
+        const productFeedExportPath = params.PRODUCT_FEED_EXPORT_PATH || '';
+
+        if (!clientName) {
+            logger.error('CLIENT_NAME is not set in environment variables.');
+            return errorResponse('Client Name is not configured', 400);
+        }
+
+        const config = {
+            enableExtension: enableExtension ? 'yes' : 'no',
             environment,
             clientName,
-            enableProductFamilies,
+            enableProductFamilies: enableProductFamilies ? 'yes' : 'no',
             deploymentZone,
             locale,
             cloudSeoKey,
-            enableBvPixel,
-            debug,
+            enableBvPixel: enableBvPixel ? 'yes' : 'no',
+            debug: debug ? 'yes' : 'no',
             sftpUsername,
-            sftpPassword,
+            sftpPassword: '****' + (sftpPassword ? sftpPassword.slice(-4) : ''), // Masked
             sftpHostName,
             productFeedFilename,
-            productFeedExportPath,
-        } = params;
-
-        if (!enableExtension || !environment || !clientName) {
-            return {
-                statusCode: 400,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    error: "Missing required fields (enableExtension, environment, clientName).",
-                    receivedParams: params,
-                }),
-            };
-        }
-
-        const configToStore = {
-            enableExtension,
-            environment,
-            clientName,
-            enableProductFamilies,
-            deploymentZone,
-            locale,
-            cloudSeoKey,
-            enableBvPixel,
-            debug,
-            sftpUsername,
-            sftpPassword,
-            sftpHostName,
-            productFeedFilename,
-            productFeedExportPath,
+            productFeedExportPath
         };
-
-        const state = await stateLib.init();
-        await state.put("bazaarvoiceConfig", JSON.stringify(configToStore), {
-            ttl: MAX_TTL,
-        });
 
         return {
             statusCode: 200,
-            headers: { "Content-Type": "application/json" },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 success: true,
-                message: "Saved Bazaarvoice config with max TTL",
-                savedConfig: configToStore,
-            }),
+                message: 'Loaded Bazaarvoice config from environment variables',
+                config
+            })
         };
-    } else if (params.__ow_method === "get") {
-        const state = await stateLib.init();
-        const entry = await state.get("bazaarvoiceConfig");
-        let loadedConfig = {};
-        if (entry && entry.value) {
-            try {
-                loadedConfig = JSON.parse(entry.value);
-            } catch (e) {
-                logger.warn("Failed to parse stored JSON", e);
-                loadedConfig = {};
-            }
-        }
-
-        return {
-            statusCode: 200,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                success: true,
-                message: "Loaded Bazaarvoice config",
-                config: loadedConfig,
-            }),
-        };
-    } else {
-        return {
-            statusCode: 405,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                error: "Method Not Allowed",
-                allowedMethods: ["GET", "POST"],
-            }),
-        };
+    } catch (error) {
+        logger.error('Unexpected error:', error);
+        return errorResponse('Server Error: ' + error.message, 500);
     }
 }
 

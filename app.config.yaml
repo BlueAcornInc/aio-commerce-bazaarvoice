@@ -6,14 +6,99 @@ application:
         actions:
           bazaarvoice-config:
             function: src/app/actions/bazaarvoice-config/index.js
-            runtime: nodejs:22
+            runtime: nodejs:18  # Adjusted to 18 for broader compatibility
             web: "yes"
+            inputs:
+              LOG_LEVEL: debug
+              ENABLE_EXTENSION: $ENABLE_EXTENSION
+              ENVIRONMENT: $ENVIRONMENT
+              CLIENT_NAME: $CLIENT_NAME
+              ENABLE_PRODUCT_FAMILIES: $ENABLE_PRODUCT_FAMILIES
+              DEPLOYMENT_ZONE: $DEPLOYMENT_ZONE
+              LOCALE: $LOCALE
+              CLOUD_SEO_KEY: $CLOUD_SEO_KEY
+              ENABLE_BV_PIXEL: $ENABLE_BV_PIXEL
+              DEBUG: $DEBUG
+              SFTP_USERNAME: $SFTP_USERNAME
+              SFTP_PASSWORD: $SFTP_PASSWORD
+              SFTP_HOSTNAME: $SFTP_HOSTNAME
+              PRODUCT_FEED_FILENAME: $PRODUCT_FEED_FILENAME
+              PRODUCT_FEED_EXPORT_PATH: $PRODUCT_FEED_EXPORT_PATH
             annotations:
               require-adobe-auth: false
-extensions:
-  commerce/backend-ui/1:
-    $include: src/commerce-backend-ui-1/ext.config.yaml
-operations:
-  view:
-    - type: web
-      impl: web
+
+configSchema:
+  title: 'Commerce Bazaarvoice Integration'
+  description: 'Configure Bazaarvoice integration for Adobe Commerce.'
+  properties:
+    - title: 'Enable Bazaarvoice Extension'
+      type: 'boolean'
+      description: 'Enable or disable the Bazaarvoice extension.'
+      envKey: 'ENABLE_EXTENSION'
+      default: false
+    - title: 'Environment'
+      type: 'string'
+      description: 'Select the Bazaarvoice environment.'
+      enum:
+        - 'staging'
+        - 'production'
+      envKey: 'ENVIRONMENT'
+      default: 'staging'
+    - title: 'Client Name'
+      type: 'string'
+      description: 'Your Bazaarvoice client name.'
+      envKey: 'CLIENT_NAME'
+    - title: 'Enable Product Families'
+      type: 'boolean'
+      description: 'Enable Bazaarvoice product families feature.'
+      envKey: 'ENABLE_PRODUCT_FAMILIES'
+      default: false
+    - title: 'Deployment Zone'
+      type: 'string'
+      description: 'Bazaarvoice deployment zone (e.g., Main Site).'
+      envKey: 'DEPLOYMENT_ZONE'
+      default: 'Main Site'
+    - title: 'Locale'
+      type: 'string'
+      description: 'Locale for Bazaarvoice (e.g., en_US).'
+      envKey: 'LOCALE'
+    - title: 'Cloud SEO Key'
+      type: 'string'
+      description: 'Bazaarvoice Cloud SEO key.'
+      envKey: 'CLOUD_SEO_KEY'
+    - title: 'Enable BV Pixel'
+      type: 'boolean'
+      description: 'Enable Bazaarvoice Pixel tracking.'
+      envKey: 'ENABLE_BV_PIXEL'
+      default: false
+    - title: 'Debug Mode'
+      type: 'boolean'
+      description: 'Enable debug logging.'
+      envKey: 'DEBUG'
+      default: false
+    - title: 'SFTP Username'
+      type: 'string'
+      description: 'Username for Bazaarvoice SFTP.'
+      envKey: 'SFTP_USERNAME'
+    - title: 'SFTP Password'
+      type: 'string'
+      secret: true
+      description: 'Password for Bazaarvoice SFTP.'
+      envKey: 'SFTP_PASSWORD'
+    - title: 'SFTP Hostname'
+      type: 'string'
+      description: 'Hostname for Bazaarvoice SFTP.'
+      envKey: 'SFTP_HOSTNAME'
+    - title: 'Product Feed Filename'
+      type: 'string'
+      description: 'Filename for product feed export.'
+      envKey: 'PRODUCT_FEED_FILENAME'
+    - title: 'Product Feed Export Path'
+      type: 'string'
+      description: 'Export path for product feed on SFTP.'
+      envKey: 'PRODUCT_FEED_EXPORT_PATH'
+
+productDependencies:
+  - code: 'COMMC'  # Adobe Commerce Cloud
+    minVersion: '2.4.0'
+    maxVersion: '2.7.0'
