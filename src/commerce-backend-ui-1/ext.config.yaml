@@ -1,17 +1,44 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
 runtimeManifest:
   packages:
-    admin-ui-sdk:
+    bazaar-voice:
       license: Apache-2.0
       actions:
         registration:
           function: actions/registration/index.js
-          runtime: nodejs:22
-          web: "yes"
+          web: 'yes'
+          runtime: 'nodejs:18'
+          inputs:
+            LOG_LEVEL: debug
           annotations:
             require-adobe-auth: false
             final: true
-      web:
-        src: 'src/commerce-backend-ui-1/web-src'
-        distProd: 'src/commerce-backend-ui-1/web-src/dist'
-hooks:
-  build-static: 'cd src/commerce-backend-ui-1/web-src && npm install && npm run build'
+        api-store-config:
+          function: actions/api/config/runtime/storeConfig.js
+          web: 'yes'
+          runtime: 'nodejs:18'
+          inputs:
+            LOG_LEVEL: debug
+            ENCRYPTION_KEY: $ENCRYPTION_KEY
+            ENCRYPTION_IV: $ENCRYPTION_IV
+            RUNTIME_NAMESPACE: $AIO_RUNTIME_NAMESPACE
+          annotations:
+            require-adobe-auth: false
+            final: true
+        api-get-config:
+          function: actions/api/config/runtime/getConfig.js
+          web: 'yes'
+          runtime: 'nodejs:18'
+          inputs:
+            LOG_LEVEL: debug
+            ENCRYPTION_KEY: $ENCRYPTION_KEY
+            ENCRYPTION_IV: $ENCRYPTION_IV
+            RUNTIME_NAMESPACE: $AIO_RUNTIME_NAMESPACE
+          annotations:
+            require-adobe-auth: false
+            final: true

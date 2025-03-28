@@ -1,34 +1,42 @@
-async function main(params) {
-    params;
-    const namespace = process.env.__OW_NAMESPACE || "default-namespace";
-    const baseUrl = `https://${namespace}.adobeio-static.net`;
-    const href = `${baseUrl}/index.html`;
+/*
+Copyright 2024 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+async function main() {
+    const extensionId = 'BazaarVoice'
+
     return {
         statusCode: 200,
         body: {
             registration: {
-                name: "bazaarvoice-extension",
-                title: "Bazaarvoice Extension",
-                description: "Bazaarvoice integration for Adobe Commerce",
-                icon: "none",
-                publisher: "PUBLISHER_ID",
-                status: "PUBLISHED",
-                endpoints: {
-                    "commerce/backend-ui/1": {
-                        view: [
-                            {
-                                href: href,
-                            },
-                        ],
+                menuItems: [
+                    {
+                        id: `${extensionId}::first`,
+                        title: 'Bazaar Voice Configuration',
+                        parent: `${extensionId}::apps`,
+                        sortOrder: 1
                     },
-                },
-                xrInfo: {
-                    supportEmail: "extensions@blueacorn.com",
-                    appId: "APP_ID",
-                },
-            },
-        },
-    };
+                    {
+                        id: `${extensionId}::apps`,
+                        title: 'Bazaar Voice',
+                        isSection: true,
+                        sortOrder: 100
+                    }
+                ],
+                page: {
+                    title: 'Bazaar Voice Configuration'
+                }
+            }
+        }
+    }
 }
 
-exports.main = main;
+exports.main = main
