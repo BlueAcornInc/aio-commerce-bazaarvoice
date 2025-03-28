@@ -7,7 +7,7 @@ export default function BazaarvoiceConfigForm() {
             {/* Bazaarvoice Logo */}
             <Flex justifyContent="center" marginBottom="size-400">
                 <Image
-                    src="https://www.intershop.com/assets/images/d/bazaarvoice-26dbd8cd.webp"
+                    src="https://www.intershop.com/assets/images/d/bazaarvoice-26dbd8cd.webp" // Replace with the actual path to the Bazaarvoice logo
                     alt="Bazaarvoice Logo"
                     width="size-2400"
                     height="size-1200"
@@ -44,13 +44,6 @@ export default function BazaarvoiceConfigForm() {
                         </a>
                     </Link>
                 </Flex>
-            </Content>
-
-            {/* Footer */}
-            <Content marginTop="size-400" align="center">
-                <p style={{ fontSize: "0.875rem", color: "#666", textAlign: "center" }}>
-                    Made with ❤️ by Blue Acorn iCi
-                </p>
             </Content>
         </View>
     );
