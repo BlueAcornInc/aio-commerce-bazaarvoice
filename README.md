@@ -1,4 +1,4 @@
-# Bazaarvoice App for Adobe Commerce as a Cloud Service 
+# Bazaarvoice App for Adobe Commerce as a Cloud Service
 
 This app provides a lightweight, out-of-process solution to manage Bazaarvoice integration settings for Adobe Commerce. Configuration is set at install time via Adobe Exchange, and the app exposes a read-only endpoint to retrieve these settings for use in your Commerce instance.
 
@@ -7,11 +7,11 @@ This app provides a lightweight, out-of-process solution to manage Bazaarvoice i
 ## App Functionality
 
 - **Configuration**: Set via Adobe Exchange at install time, including:
-    - Enable/disable Bazaarvoice extension
-    - Environment (staging/production)
-    - Client name
-    - Product families, deployment zone, locale, SEO key, BV Pixel, debug mode
-    - SFTP details for product feeds
+  - Enable/disable Bazaarvoice extension
+  - Environment (staging/production)
+  - Client name
+  - Product families, deployment zone, locale, SEO key, BV Pixel, debug mode
+  - SFTP details for product feeds
 - **Action**: The `bazaarvoice-config` action (GET-only) retrieves these settings from environment variables and returns them as JSON.
 - **UI**: An optional front-end (under `commerce-backend-ui-1`) can display this config if implemented.
 
@@ -72,6 +72,7 @@ PRODUCT_FEED_EXPORT_PATH=/feeds
 ```
 
 #### Notes:
+
 - **Runtime Credentials**: Set via `aio app use` if deploying to a specific namespace.
 - **Bazaarvoice Config**: These are for local testing; deployed values come from `configSchema`.
 
@@ -85,21 +86,24 @@ PRODUCT_FEED_EXPORT_PATH=/feeds
 #### Action Dependencies
 
 - Two options to resolve action dependencies:
-    1. **Packaged Action File**: Add dependencies to the root `package.json`, install with `npm install`, and point `function` in `app.config.yaml` to the entry file (e.g., `src/app/actions/bazaarvoice-config/index.js`). Webpack will bundle it into a single minified file. Use this for smaller action sizes.
-    2. **Zipped Action Folder**: Add a `package.json` in the action folder (e.g., `src/app/actions/bazaarvoice-config/`), list dependencies there, and point `function` to the folder. Dependencies will be installed and zipped for deployment. Use this to isolate action dependencies.
+  1. **Packaged Action File**: Add dependencies to the root `package.json`, install with `npm install`, and point `function` in `app.config.yaml` to the entry file (e.g., `src/app/actions/bazaarvoice-config/index.js`). Webpack will bundle it into a single minified file. Use this for smaller action sizes.
+  2. **Zipped Action Folder**: Add a `package.json` in the action folder (e.g., `src/app/actions/bazaarvoice-config/`), list dependencies there, and point `function` to the folder. Dependencies will be installed and zipped for deployment. Use this to isolate action dependencies.
 
 #### Current Setup
+
 - The `bazaarvoice-config` action uses the packaged file approach with dependencies in the root `package.json` (e.g., `@adobe/aio-sdk`).
 
 ## Debugging in VS Code
 
 While running your local server (`aio app run`), debug UI and actions using VS Code:
+
 - Open the debugger and select `WebAndActions` to debug both.
 - Use individual configs for UI or the `bazaarvoice-config` action if preferred.
 
 ## Typescript Support for UI
 
 To use TypeScript for the UI (if applicable):
+
 - Use `.tsx` for React components.
 - Add a `tsconfig.json` with:
   ```json
@@ -110,7 +114,8 @@ To use TypeScript for the UI (if applicable):
   }
   ```
 
-## Without Magento Adobe Commerce: 
+## Without Magento Adobe Commerce:
+
 The easiest way to develop your code and test it. You can work assuming your Admin SDK menu inside Adobe Commerce works and loads the form. You do not need to run this inside the Commerce container.
 
 First generate the encryption keys. In your terminal in root directory of this app run:
@@ -129,11 +134,10 @@ IV Key:
 
 `echo "ENCRYPTION_IV=$(openssl rand -hex 16)" > .env`
 
-
 Run the local test of your app:
 `aio app run`
 
-This deploys the runtime functions in Adobe cloud and the local form instance consumes it. 
+This deploys the runtime functions in Adobe cloud and the local form instance consumes it.
 
 Visit https://localhost:9080
 to see the form in action.
@@ -148,21 +152,24 @@ You need the following prerequisites to test on local:
 - IMS auth on your local AC instance.
 
 ## IMS Faking
+
 <https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/configuration/>
 get node server snippet from there and paste it inside a random directory in your AC container. This must be done inside AC php container. Run `node server.js` after generating key/cert following instructions in that link above.
 
 This short circuits the ims authorization and serves you the aio app. In your aio app dir,
 
 ## Next Steps
+
 Shell into magento container inside your aio app dir and set up aio:\
 `npm install -g @adobe/aio-cli`\
 Navigate to your AIO app repo codebase (inside the AC codebase as mentioned before)
 Run`aio auth:login`. Once installed make sure you have a project workspace already in [Adobe console developer (ACD) ](https://developer.adobe.com/console/projects/) set up.
 
 Go into your builder project workspace and select "Download All" to get the json at the top right of ACD.
-save this as `config.json` in your aio app dir.  Run `aio app use config.json` to load the profile. To launch your app
+save this as `config.json` in your aio app dir. Run `aio app use config.json` to load the profile. To launch your app
 
 Once you got to this stage, and you still have `server.js` running:
+
 - Run `aio app dev`
 - Go to admin AC admin area:
   Stores -> Configuration Adobe Services -> Admin UI SDK
@@ -183,7 +190,7 @@ This registers the menu and you should see it now after admin refresh. But the f
 
 ## Backend Form
 
-- Cancel out of the aio app dev command currently running,  It's already registered and does not need to run all the time.
+- Cancel out of the aio app dev command currently running, It's already registered and does not need to run all the time.
   If you have 2 apps running, 1 of them being Admin SDK form and 1 of them being another application ( reference your `app.config.yaml` file of your AIO app, then you need to run `aio app run -e [application_name]` to deploy the endpoints or runtime functions to adobe before your form can work completely if it has dependencies on it. You will see message in terminal saying it was successfully deployed. now terminate that command with ctrl+c.
 - Run `aio app run -e commerce/backend-ui/1`
--  Go back to Magento admin, refresh, and you should see the form load in the space now.
+- Go back to Magento admin, refresh, and you should see the form load in the space now.

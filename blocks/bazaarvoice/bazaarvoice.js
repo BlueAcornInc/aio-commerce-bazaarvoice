@@ -22,7 +22,9 @@ export default async function decorate(block) {
     },
     {
       attr: 'data-bv-product-id',
-      value: (window?.location?.pathname ?? '').slice((window?.location.pathname ?? '').lastIndexOf('/') + 1),
+      value: (window?.location?.pathname ?? '').slice(
+        (window?.location.pathname ?? '').lastIndexOf('/') + 1,
+      ),
     },
   ];
 

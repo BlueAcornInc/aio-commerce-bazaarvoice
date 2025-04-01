@@ -5,12 +5,13 @@ This module provides a minimal but functional integration of BazaarVoice as an O
 ## Features Included in MVP
 
 1. **BazaarVoice Adobe Commerce Blocks**
-    - Leverages BazaarVoice’s [Reviews Display](https://BazaarVoice.com/docs/elements/payment-element) to handle secure, PCI-compliant payment form rendering and submission.
+
+   - Leverages BazaarVoice’s [Reviews Display](https://BazaarVoice.com/docs/elements/payment-element) to handle secure, PCI-compliant payment form rendering and submission.
 
 2. **Merchant Configutations in Adobe Commerce Admin**
-    - Administrative section with basic configuration management and secure setting storage using SaaS and App Builder best practices:
-        - mvp – MVP landing page that provides callouts for documentation, feedback and initial configuration
-        - dev – Config storage using `lib-files` and best practice implementations of config storage tracking to our best understanding of merchants desires for SaaS GA. In future work, this is what team will align to in order to build complete offering
+   - Administrative section with basic configuration management and secure setting storage using SaaS and App Builder best practices:
+     - mvp – MVP landing page that provides callouts for documentation, feedback and initial configuration
+     - dev – Config storage using `lib-files` and best practice implementations of config storage tracking to our best understanding of merchants desires for SaaS GA. In future work, this is what team will align to in order to build complete offering
 
 ---
 
@@ -31,12 +32,14 @@ Ensure your environment meets the following requirements **before proceeding**:
 
 2. **Adobe I/O CLI Installed**  
    Install globally with:
+
    ```bash
    npm install -g @adobe/aio-cli
    ```
 
 3. **Adobe Commerce with Required OOPE Modules**  
    Ensure these modules are installed:
+
    ```bash
    composer require magento/module-out-of-process-payment-methods --with-dependencies
    composer require magento/commerce-eventing --with-dependencies
@@ -55,33 +58,43 @@ Ensure your environment meets the following requirements **before proceeding**:
 After prerequisites are met, follow these steps to initialize and configure your BazaarVoice OOPE app:
 
 1. **Log In to Adobe I/O CLI**
+
    ```bash
    aio login
    ```
+
    Select your **Organization**, then your **Project** and **Workspace**.
 
 2. **Create a New Project Folder**
+
    ```bash
    mkdir aio-commerce-BazaarVoice && cd aio-commerce-BazaarVoice
    ```
 
 3. **Initialize the App Using GitHub Template**
+
    ```bash
    aio app init --repo BlueAcornInc/aio-commerce-BazaarVoice-app --github-pat $GITHUB_PAT
    ```
+
    > Replace `$GITHUB_PAT` with your GitHub personal access token. This also creates `.aio` and `.env` files.
 
    Alternatively, you can use:
+
    ```bash
    aio app use
    ```
+
    ...to generate these configuration files from an existing project.
 
 4. **Add Adobe I/O Services**
+
    ```bash
    aio app add service
    ```
+
    Select the following services:
+
    - Adobe I/O Events for Adobe Commerce
    - I/O Events
    - I/O Management API
@@ -93,14 +106,18 @@ After prerequisites are met, follow these steps to initialize and configure your
 
 6. **Add OAuth Credentials to `.env`**  
    Copy `env.dist` to `.env` if not already done:
+
    ```bash
    cp env.dist .env
    ```
+
    Then append the following values:
+
    - `AIO_RUNTIME_NAMESPACE`
    - `AIO_...` OAuth-related credentials from Adobe Console
 
 7. **Add Your Adobe Commerce Environment Config**
+
    - `COMMERCE_BASE_URL`: Base URL of your Adobe Commerce instance (e.g. `https://mystore.com`)
    - `COMMERCE_PAYMENT_METHOD_CODES=["oope_BazaarVoice"]`
 
@@ -110,24 +127,25 @@ After prerequisites are met, follow these steps to initialize and configure your
 
 - In the Adobe Commerce Admin panel:
 
-   - Navigate to:  
-     `System > Extensions > Integrations`
+  - Navigate to:  
+    `System > Extensions > Integrations`
 
-     - Click **Add New Integration**
+    - Click **Add New Integration**
 
-     - Fill in the following values:
-        - **Name**: e.g. `BazaarVoice App Builder Integration`
-        - Leave other fields blank unless required by your organization
+    - Fill in the following values:
 
-     - Under the **API** tab, click **Select All** to grant all permissions, or configure scopes as needed
+      - **Name**: e.g. `BazaarVoice App Builder Integration`
+      - Leave other fields blank unless required by your organization
 
-     - Save the integration and then **activate** it
+    - Under the **API** tab, click **Select All** to grant all permissions, or configure scopes as needed
 
-     - You will be shown the following credentials:
-        - **Consumer Key**
-        - **Consumer Secret**
-        - **Access Token**
-        - **Access Token Secret**
+    - Save the integration and then **activate** it
+
+    - You will be shown the following credentials:
+      - **Consumer Key**
+      - **Consumer Secret**
+      - **Access Token**
+      - **Access Token Secret**
 
 - Remove the commented out Option 1 fields and update these to your `.env` file:
 - ```env
@@ -135,6 +153,7 @@ After prerequisites are met, follow these steps to initialize and configure your
   COMMERCE_CONSUMER_SECRET=your-consumer-secret
   COMMERCE_ACCESS_TOKEN=your-access-token
   COMMERCE_ACCESS_TOKEN_SECRET=your-access-token-secret
+  ```
 
 10. **Enable Adobe I/O Events in Adobe Commerce Admin**
 
@@ -146,8 +165,8 @@ After prerequisites are met, follow these steps to initialize and configure your
   - Set **"Enable Adobe I/O Events"** to `Yes`
 
   - Fill in the following required fields:
-     - **Merchant ID**
-     - **Environment ID**
+    - **Merchant ID**
+    - **Environment ID**
 
 - These values link your Commerce instance to your Adobe I/O Events provider.
 
@@ -155,6 +174,7 @@ After prerequisites are met, follow these steps to initialize and configure your
 - ```env
   COMMERCE_ADOBE_IO_EVENTS_MERCHANT_ID=your-merchant-id-here
   COMMERCE_ADOBE_IO_EVENTS_ENVIRONMENT_ID=your-environment-id-here
+  ```
 
 11. **Run the Onboarding Script**
 
@@ -167,19 +187,22 @@ Once all the necessary fields in your `.env` file have been filled in (OAuth key
 - ```bash
   npm run onboarding
 
+  ```
+
 - This will:
   - Set up your App Builder services
   - Create and register the BazaarVoice event provider
   - Deploy the App Builder application
   - Register your out-of-process payment method
-  
-13.  **Subscribe to Commerce Events**
+
+13. **Subscribe to Commerce Events**
 
 SSH into your Adobe Commerce Cloud environment and subscribe to the required events using the Magento CLI:
 
 ```bash
     bin/magento events:subscribe observer.checkout_submit_all_after --fields=order.increment_id --fields=order.customer_firstname --fields=order.customer_lastname --fields=order.payment.method --fields=order.payment.additional_information
 ```
+
 14. BazaarVoice Backend is Now Ready
 
 The BazaarVoice Out-of-Process Payment Method has been successfully registered and deployed.
@@ -190,7 +213,7 @@ Your App Builder backend is now fully configured to handle payment requests and 
 
 ## 💳 Frontend Integration
 
-To complete the BazaarVoice OOPE setup, you must integrate the Adobe Commerce Storefront/EDS blocks into the merchant store. These blocks are tracked with the merchant storefront code repository. 
+To complete the BazaarVoice OOPE setup, you must integrate the Adobe Commerce Storefront/EDS blocks into the merchant store. These blocks are tracked with the merchant storefront code repository.
 
 Introducing these blocks are installed by copying the `blocks` directory from the block collection, which is a public repo with the block files available for a developer to bring to the merchant storefront. These files must be paired with these runtime actions (the "app") to complete the setup.
 
@@ -200,9 +223,9 @@ We have already implemented BazaarVoice integration using blocks in the EDS stor
 
 👉 To set up the frontend integration, follow the instructions in the `DROPINS.md` file of the EDS storefront:
 
-📂 [`showcase-evergreen-commerce-storefront`](https://github.com/BlueAcornInc/showcase-evergreen-commerce-storefront)  
+📂 [`showcase-evergreen-commerce-storefront`](https://github.com/BlueAcornInc/showcase-evergreen-commerce-storefront)
 
-This includes blocks required for Adobe Commerce Storefront to present reviews. 
+This includes blocks required for Adobe Commerce Storefront to present reviews.
 
 Once connected, your storefront will be fully wired to support BazaarVoice with all of the Out-of-Process enablement via App Builder and Adobe Commerce.
 

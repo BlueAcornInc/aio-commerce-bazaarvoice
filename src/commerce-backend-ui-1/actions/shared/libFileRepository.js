@@ -4,7 +4,9 @@ const filesLib = require('@adobe/aio-lib-files');
 
 async function writeFile(filePath, data) {
   const files = await filesLib.init();
-  await files.write(filePath, data, { contentType: 'application/octet-stream' });
+  await files.write(filePath, data, {
+    contentType: 'application/octet-stream',
+  });
 }
 
 async function readFile(filePath) {

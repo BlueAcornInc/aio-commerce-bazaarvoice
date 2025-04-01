@@ -24,13 +24,15 @@ async function main(params) {
     logger.info(`Encrypted configuration saved as ${filePath}`);
     return {
       statusCode: 200,
-      body: { message: `Configuration saved securely for namespace: ${RUNTIME_NAMESPACE}` }
+      body: {
+        message: `Configuration saved securely for namespace: ${RUNTIME_NAMESPACE}`,
+      },
     };
   } catch (error) {
     logger.error('Encryption or storage error:', error);
     return {
       statusCode: 500,
-      body: { error: 'Failed to encrypt and store form data.' }
+      body: { error: 'Failed to encrypt and store form data.' },
     };
   }
 }

@@ -23,21 +23,21 @@ async function main(params) {
     logger.info('Configuration retrieved successfully.');
     return {
       statusCode: 200,
-      body: config
+      body: config,
     };
   } catch (error) {
     if (error.code === 'ERROR_FILE_NOT_EXISTS' || error.code === 'ENOENT') {
       logger.info('No configuration file found, returning empty config.');
       return {
         statusCode: 200,
-        body: {}
-      }
+        body: {},
+      };
     }
     logger.error(`Error retrieving configuration from ${filePath}:`, error);
     return {
       statusCode: 500,
-      body: { error: 'Failed to retrieve and decrypt configuration.' }
-    }
+      body: { error: 'Failed to retrieve and decrypt configuration.' },
+    };
   }
 }
 

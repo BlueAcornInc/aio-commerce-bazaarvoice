@@ -11,32 +11,32 @@ governing permissions and limitations under the License.
 */
 
 async function main() {
-    const extensionId = 'BazaarVoice'
+  const extensionId = 'BazaarVoice';
 
-    return {
-        statusCode: 200,
-        body: {
-            registration: {
-                menuItems: [
-                    {
-                        id: `${extensionId}::first`,
-                        title: 'Bazaar Voice Configuration',
-                        parent: `${extensionId}::apps`,
-                        sortOrder: 1
-                    },
-                    {
-                        id: `${extensionId}::apps`,
-                        title: 'Bazaar Voice',
-                        isSection: true,
-                        sortOrder: 100
-                    }
-                ],
-                page: {
-                    title: 'Bazaar Voice Configuration'
-                }
-            }
-        }
-    }
+  return {
+    statusCode: 200,
+    body: {
+      registration: {
+        menuItems: [
+          {
+            id: `${extensionId}::first`,
+            title: 'Bazaar Voice Configuration',
+            parent: `${extensionId}::apps`,
+            sortOrder: 1,
+          },
+          {
+            id: `${extensionId}::apps`,
+            title: 'Bazaar Voice',
+            isSection: true,
+            sortOrder: 100,
+          },
+        ],
+        page: {
+          title: 'Bazaar Voice Configuration',
+        },
+      },
+    },
+  };
 }
 
-exports.main = main
+exports.main = main;
