@@ -25,7 +25,7 @@ application:
               PRODUCT_FEED_FILENAME: $PRODUCT_FEED_FILENAME
               PRODUCT_FEED_EXPORT_PATH: $PRODUCT_FEED_EXPORT_PATH
             annotations:
-              require-adobe-auth: false
+              require-adobe-auth: true
 
 configSchema:
   title: 'Commerce Bazaarvoice Integration'
