@@ -1,7 +1,7 @@
 // storeConfig.js
 // https://github.com/adobe/amazon-sales-channel-app-builder/blob/main/actions-src/api/account/runtime/storeCredentials.ts
-const ConfigEncryptionHelper = require('../../../shared/runtime/security/ConfigEncryptionHelper');
-const { writeFile } = require('../../../shared/libFileRepository');
+const ConfigEncryptionHelper = require('../../../../shared/runtime/security/ConfigEncryptionHelper');
+const { writeFile } = require('../../../../shared/libFileRepository');
 const { Core } = require('@adobe/aio-sdk');
 
 const logger = Core.Logger('storeConfig', { level: 'info' });

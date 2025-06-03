@@ -6,7 +6,7 @@ actions: actions
 web: web-src
 runtimeManifest:
   packages:
-    bazaar-voice:
+    commerce-backend-ui-1:
       license: Apache-2.0
       actions:
         registration:
@@ -16,29 +16,5 @@ runtimeManifest:
           inputs:
             LOG_LEVEL: debug
           annotations:
-            require-adobe-auth: false
-            final: true
-        api-store-config:
-          function: actions/api/config/runtime/storeConfig.js
-          web: 'yes'
-          runtime: 'nodejs:18'
-          inputs:
-            LOG_LEVEL: debug
-            ENCRYPTION_KEY: $ENCRYPTION_KEY
-            ENCRYPTION_IV: $ENCRYPTION_IV
-            RUNTIME_NAMESPACE: $AIO_RUNTIME_NAMESPACE
-          annotations:
-            require-adobe-auth: false
-            final: true
-        api-get-config:
-          function: actions/api/config/runtime/getConfig.js
-          web: 'yes'
-          runtime: 'nodejs:18'
-          inputs:
-            LOG_LEVEL: debug
-            ENCRYPTION_KEY: $ENCRYPTION_KEY
-            ENCRYPTION_IV: $ENCRYPTION_IV
-            RUNTIME_NAMESPACE: $AIO_RUNTIME_NAMESPACE
-          annotations:
-            require-adobe-auth: false
+            require-adobe-auth: true
             final: true

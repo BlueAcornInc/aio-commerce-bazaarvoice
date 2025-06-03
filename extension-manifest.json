@@ -1,0 +1,8 @@
+{
+  "name": "BaazarVoice",
+  "displayName": "BaazarVoice",
+  "description": "BaazarVoice for Adobe Commerce",
+  "platform": "web",
+  "id": "BaazarVoice",
+  "version": "1.0.0"
+}
