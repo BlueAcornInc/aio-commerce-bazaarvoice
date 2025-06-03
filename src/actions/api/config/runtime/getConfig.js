@@ -1,7 +1,7 @@
 // getConfig.js
 //https://github.com/adobe/amazon-sales-channel-app-builder/blob/main/actions-src/api/account/runtime/getCredentials.ts
-const ConfigEncryptionHelper = require('../../../shared/runtime/security/ConfigEncryptionHelper');
-const { readFile } = require('../../../shared/libFileRepository');
+const ConfigEncryptionHelper = require('../../../../shared/runtime/security/ConfigEncryptionHelper');
+const { readFile } = require('../../../../shared/libFileRepository');
 const { Core } = require('@adobe/aio-sdk');
 const logger = Core.Logger('getConfig', { level: 'info' });
 
