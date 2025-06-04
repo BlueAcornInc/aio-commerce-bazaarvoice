@@ -137,6 +137,62 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
           defaultValue="Main Site"
         />
         <TextField label="Locale" value={locale} onChange={setLocale} />
+
+        <Button variant="accent" onPress={handleSave}>
+          Save
+        </Button>
+      </Form>
+    </View>
+  );
+
+
+  return (
+    <View padding="size-250">
+      <Content marginBottom="size-200">{statusMsg}</Content>
+      <Form maxWidth="size-6000">
+        {/* General Configuration Section */}
+        <Heading level={2} marginTop="size-200" marginBottom="size-100">
+          General Configuration
+        </Heading>
+        <Picker
+          label="Enable Bazaarvoice Extension"
+          selectedKey={enableExtension}
+          onSelectionChange={setEnableExtension}
+          isRequired
+        >
+          <Item key="yes">Yes</Item>
+          <Item key="no">No</Item>
+        </Picker>
+        <Picker
+          label="Environment"
+          selectedKey={environment}
+          onSelectionChange={setEnvironment}
+          isRequired
+        >
+          <Item key="staging">Staging</Item>
+          <Item key="production">Production</Item>
+        </Picker>
+        <TextField
+          label="Client Name"
+          value={clientName}
+          onChange={setClientName}
+          isRequired
+        />
+        <Picker
+          label="Enable BV Product Families"
+          selectedKey={enableProductFamilies}
+          onSelectionChange={setEnableProductFamilies}
+        >
+          <Item key="yes">Yes</Item>
+          <Item key="no">No</Item>
+        </Picker>
+        <TextField
+          label="Deployment Zone"
+          value={deploymentZone}
+          onChange={setDeploymentZone}
+          defaultValue="Main Site"
+        />
+        <TextField label="Locale" value={locale} onChange={setLocale} />
         <TextField
           label="Cloud SEO Key"
           value={cloudSeoKey}

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 async function main() {
-  const extensionId = 'BazaarVoice';
+  const extensionId = 'Bazaarvoice';
 
   return {
     statusCode: 200,
@@ -20,19 +20,19 @@ async function main() {
         menuItems: [
           {
             id: `${extensionId}::first`,
-            title: 'Bazaar Voice Configuration',
+            title: 'General Configuration',
             parent: `${extensionId}::apps`,
             sortOrder: 1,
           },
           {
             id: `${extensionId}::apps`,
-            title: 'Bazaar Voice',
+            title: 'Bazaarvoice',
             isSection: true,
             sortOrder: 100,
           },
         ],
         page: {
-          title: 'Bazaar Voice Configuration',
+          title: 'Bazaarvoice Configuration',
         },
       },
     },

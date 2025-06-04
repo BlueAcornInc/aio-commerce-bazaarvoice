@@ -1,12 +1,12 @@
-# BazaarVoice Integration - MVP Feature Set
+# Bazaarvoice Integration - MVP Feature Set
 
-This module provides a minimal but functional integration of BazaarVoice as an Out-of-Process Payment Extension (OOPE) using BazaarVoice's Payment Element.
+This module provides a minimal but functional integration of Bazaarvoice as an Out-of-Process Payment Extension (OOPE) using Bazaarvoice's Payment Element.
 
 ## Features Included in MVP
 
-1. **BazaarVoice Adobe Commerce Blocks**
+1. **Bazaarvoice Adobe Commerce Blocks**
 
-   - Leverages BazaarVoice’s [Reviews Display](https://BazaarVoice.com/docs/elements/payment-element) to handle secure, PCI-compliant payment form rendering and submission.
+   - Leverages Bazaarvoice’s [Reviews Display](https://Bazaarvoice.com/docs/elements/payment-element) to handle secure, PCI-compliant payment form rendering and submission.
 
 2. **Merchant Configutations in Adobe Commerce Admin**
    - Administrative section with basic configuration management and secure setting storage using SaaS and App Builder best practices:
@@ -19,7 +19,7 @@ This is a foundational implementation meant to be extensible. Additional feature
 
 # INSTALLATION.md
 
-This guide provides step-by-step instructions to set up the Adobe Commerce BazaarVoice Out-of-Process Payment Extension using Adobe Developer App Builder.
+This guide provides step-by-step instructions to set up the Adobe Commerce Bazaarvoice Out-of-Process Payment Extension using Adobe Developer App Builder.
 
 ---
 
@@ -55,7 +55,7 @@ Ensure your environment meets the following requirements **before proceeding**:
 
 ## 🚀 Setup Instructions
 
-After prerequisites are met, follow these steps to initialize and configure your BazaarVoice OOPE app:
+After prerequisites are met, follow these steps to initialize and configure your Bazaarvoice OOPE app:
 
 1. **Log In to Adobe I/O CLI**
 
@@ -68,13 +68,13 @@ After prerequisites are met, follow these steps to initialize and configure your
 2. **Create a New Project Folder**
 
    ```bash
-   mkdir aio-commerce-BazaarVoice && cd aio-commerce-BazaarVoice
+   mkdir aio-commerce-Bazaarvoice && cd aio-commerce-Bazaarvoice
    ```
 
 3. **Initialize the App Using GitHub Template**
 
    ```bash
-   aio app init --repo BlueAcornInc/aio-commerce-BazaarVoice-app --github-pat $GITHUB_PAT
+   aio app init --repo BlueAcornInc/aio-commerce-Bazaarvoice-app --github-pat $GITHUB_PAT
    ```
 
    > Replace `$GITHUB_PAT` with your GitHub personal access token. This also creates `.aio` and `.env` files.
@@ -119,7 +119,7 @@ After prerequisites are met, follow these steps to initialize and configure your
 7. **Add Your Adobe Commerce Environment Config**
 
    - `COMMERCE_BASE_URL`: Base URL of your Adobe Commerce instance (e.g. `https://mystore.com`)
-   - `COMMERCE_PAYMENT_METHOD_CODES=["oope_BazaarVoice"]`
+   - `COMMERCE_PAYMENT_METHOD_CODES=["oope_Bazaarvoice"]`
 
 8. **Create an Integration in Adobe Commerce Admin**
 
@@ -134,7 +134,7 @@ After prerequisites are met, follow these steps to initialize and configure your
 
     - Fill in the following values:
 
-      - **Name**: e.g. `BazaarVoice App Builder Integration`
+      - **Name**: e.g. `Bazaarvoice App Builder Integration`
       - Leave other fields blank unless required by your organization
 
     - Under the **API** tab, click **Select All** to grant all permissions, or configure scopes as needed
@@ -191,7 +191,7 @@ Once all the necessary fields in your `.env` file have been filled in (OAuth key
 
 - This will:
   - Set up your App Builder services
-  - Create and register the BazaarVoice event provider
+  - Create and register the Bazaarvoice event provider
   - Deploy the App Builder application
   - Register your out-of-process payment method
 
@@ -203,9 +203,9 @@ SSH into your Adobe Commerce Cloud environment and subscribe to the required eve
     bin/magento events:subscribe observer.checkout_submit_all_after --fields=order.increment_id --fields=order.customer_firstname --fields=order.customer_lastname --fields=order.payment.method --fields=order.payment.additional_information
 ```
 
-14. BazaarVoice Backend is Now Ready
+14. Bazaarvoice Backend is Now Ready
 
-The BazaarVoice Out-of-Process Payment Method has been successfully registered and deployed.
+The Bazaarvoice Out-of-Process Payment Method has been successfully registered and deployed.
 
 Your App Builder backend is now fully configured to handle payment requests and receive order submission events from Adobe Commerce.
 
@@ -213,13 +213,13 @@ Your App Builder backend is now fully configured to handle payment requests and 
 
 ## 💳 Frontend Integration
 
-To complete the BazaarVoice OOPE setup, you must integrate the Adobe Commerce Storefront/EDS blocks into the merchant store. These blocks are tracked with the merchant storefront code repository.
+To complete the Bazaarvoice OOPE setup, you must integrate the Adobe Commerce Storefront/EDS blocks into the merchant store. These blocks are tracked with the merchant storefront code repository.
 
 Introducing these blocks are installed by copying the `blocks` directory from the block collection, which is a public repo with the block files available for a developer to bring to the merchant storefront. These files must be paired with these runtime actions (the "app") to complete the setup.
 
 ### 🔗 Integration Instructions
 
-We have already implemented BazaarVoice integration using blocks in the EDS storefront reference repository.
+We have already implemented Bazaarvoice integration using blocks in the EDS storefront reference repository.
 
 👉 To set up the frontend integration, follow the instructions in the `DROPINS.md` file of the EDS storefront:
 
@@ -227,6 +227,6 @@ We have already implemented BazaarVoice integration using blocks in the EDS stor
 
 This includes blocks required for Adobe Commerce Storefront to present reviews.
 
-Once connected, your storefront will be fully wired to support BazaarVoice with all of the Out-of-Process enablement via App Builder and Adobe Commerce.
+Once connected, your storefront will be fully wired to support Bazaarvoice with all of the Out-of-Process enablement via App Builder and Adobe Commerce.
 
 ---
