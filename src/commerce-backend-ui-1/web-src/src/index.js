@@ -60,7 +60,7 @@ function bootstrapInExcShell() {
   runtime.on('ready', ({ imsOrg, imsToken, imsProfile, locale }) => {
     // tell the exc-runtime object we are done
     runtime.done();
-    console.log('Ready! received imsProfile:', imsProfile);
+    // console.log('Ready! received imsProfile:', imsProfile);
     const ims = {
       profile: imsProfile,
       org: imsOrg,
@@ -72,8 +72,8 @@ function bootstrapInExcShell() {
   // set solution info, shortTitle is used when window is too small to display full title
   runtime.solution = {
     icon: 'AdobeExperienceCloud',
-    title: 'SampleExtension',
-    shortTitle: 'JGR',
+    title: 'Baazar Voice Configuration',
+    shortTitle: 'BVC',
   };
-  runtime.title = 'SampleExtension';
+  runtime.title = 'Baazar Voice Configuration';
 }
