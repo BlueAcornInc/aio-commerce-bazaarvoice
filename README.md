@@ -2,23 +2,20 @@
 
 This app provides a lightweight, out-of-process solution to manage Bazaarvoice integration settings for Adobe Commerce. Configuration is set at install time via Adobe Exchange, and the app exposes a read-only endpoint to retrieve these settings for use in your Commerce instance.
 
-This app provides a lightweight, out-of-process solution to manage Bazaarvoice integration settings for Adobe Commerce. Configuration is set at install time via Adobe Exchange, and the app exposes a read-only endpoint to retrieve these settings for use in your Commerce instance.
-
 ## App Functionality
 
-- **Configuration**: Set via Adobe Exchange at install time, including:
+- **Configuration**: Set via Adobe Commerce backend, including:
   - Enable/disable Bazaarvoice extension
   - Environment (staging/production)
   - Client name
   - Product families, deployment zone, locale, SEO key, BV Pixel, debug mode
   - SFTP details for product feeds
 - **Action**: The `bazaarvoice-config` action (GET-only) retrieves these settings from environment variables and returns them as JSON.
-- **UI**: An optional front-end (under `commerce-backend-ui-1`) can display this config if implemented.
 
 ## Integration with Adobe Commerce
 
 - Use the `bazaarvoice-config` endpoint (`/api/v1/web/aio-commerce-bazaarvoice-app/bazaarvoice-config`) in a custom Commerce module to access settings.
-- Deploy the UI (if built) in the Admin Panel via the `commerce-backend-ui-1` extension.
+- Deploy the UI in the Admin Panel via the `commerce-backend-ui-1` extension.
 
 ## Setup
 
@@ -55,32 +52,17 @@ For local testing, create this file manually or generate it with `aio app use` i
 # AIO_RUNTIME_NAMESPACE=
 
 ## Bazaarvoice configuration for local testing (overridden by configSchema on deployment)
-ENABLE_EXTENSION=false
-ENVIRONMENT=staging
-CLIENT_NAME=your-client-name
-ENABLE_PRODUCT_FAMILIES=false
-DEPLOYMENT_ZONE=Main Site
-LOCALE=en_US
-CLOUD_SEO_KEY=your-seo-key
-ENABLE_BV_PIXEL=false
-DEBUG=false
-SFTP_USERNAME=your-sftp-username
-SFTP_PASSWORD=your-sftp-password
-SFTP_HOSTNAME=sftp.bazaarvoice.com
-PRODUCT_FEED_FILENAME=products.xml
-PRODUCT_FEED_EXPORT_PATH=/feeds
 ```
 
 #### Notes:
 
 - **Runtime Credentials**: Set via `aio app use` if deploying to a specific namespace.
-- **Bazaarvoice Config**: These are for local testing; deployed values come from `configSchema`.
 
 ### `app.config.yaml`
 
 - The main configuration file defining the app’s implementation.
 - Defines the `bazaarvoice-config` action and a `configSchema` for user settings at install time.
-- Includes an extension (`commerce-backend-ui-1`) for potential UI integration.
+- Includes an extension (`commerce-backend-ui-1`) for UI integration.
 - More details on configuration can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml).
 
 #### Action Dependencies
@@ -148,7 +130,7 @@ You need the following prerequisites to test on local:
 
 - https://localhost:8443 AC instance up and running using the evergreen repo
 - Your app builder repo must be inside the AC root codebase.
-- Admin SDK module installed in AC composer.json the following line: `"magento/commerce-backend-sdk": "2.2.0 as 1.4.1",`
+- Admin SDK module installed in AC composer.json the following line: `"magento/commerce-backend-sdk": "3.0.0 as 2.3.0",`
 - IMS auth on your local AC instance.
 
 ## IMS Faking
