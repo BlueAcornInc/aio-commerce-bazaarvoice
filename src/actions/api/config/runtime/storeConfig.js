@@ -1,10 +1,10 @@
 // storeConfig.js
 // https://github.com/adobe/amazon-sales-channel-app-builder/blob/main/actions-src/api/account/runtime/storeCredentials.ts
-const ConfigEncryptionHelper = require('../../../../shared/runtime/security/ConfigEncryptionHelper');
-const { writeFile } = require('../../../../shared/libFileRepository');
-const { Core } = require('@adobe/aio-sdk');
+const ConfigEncryptionHelper = require("../../../../shared/runtime/security/ConfigEncryptionHelper");
+const { writeFile } = require("../../../../shared/libFileRepository");
+const { Core } = require("@adobe/aio-sdk");
 
-const logger = Core.Logger('storeConfig', { level: 'info' });
+const logger = Core.Logger("storeConfig", { level: "info" });
 
 async function main(params) {
   const { ENCRYPTION_KEY, ENCRYPTION_IV, RUNTIME_NAMESPACE } = params;
@@ -29,10 +29,10 @@ async function main(params) {
       },
     };
   } catch (error) {
-    logger.error('Encryption or storage error:', error);
+    logger.error("Encryption or storage error:", error);
     return {
       statusCode: 500,
-      body: { error: 'Failed to encrypt and store form data.' },
+      body: { error: "Failed to encrypt and store form data." },
     };
   }
 }

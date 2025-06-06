@@ -1,4 +1,4 @@
-import BazaarvoiceConfigForm from './BazaarvoiceConfigForm';
+import BazaarvoiceConfigForm from "./BazaarvoiceConfigForm";
 
 export const MainPage = (props) => {
   const namespace = process.env.AIO_runtime_namespace;

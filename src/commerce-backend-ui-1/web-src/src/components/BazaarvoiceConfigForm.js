@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
@@ -9,24 +9,24 @@ import {
   Picker,
   Item,
   Switch,
-} from '@adobe/react-spectrum';
+} from "@adobe/react-spectrum";
 
 export default function BazaarvoiceConfigForm({ actionUrl }) {
-  const [enableExtension, setEnableExtension] = useState('no');
-  const [environment, setEnvironment] = useState('staging');
-  const [clientName, setClientName] = useState('');
-  const [enableProductFamilies, setEnableProductFamilies] = useState('no');
-  const [deploymentZone, setDeploymentZone] = useState('Main Site');
-  const [locale, setLocale] = useState('');
-  const [cloudSeoKey, setCloudSeoKey] = useState('');
-  const [enableBvPixel, setEnableBvPixel] = useState('no');
-  const [debug, setDebug] = useState('no');
-  const [sftpUsername, setSftpUsername] = useState('');
-  const [sftpPassword, setSftpPassword] = useState('');
-  const [sftpHostName, setSftpHostName] = useState('');
-  const [productFeedFilename, setProductFeedFilename] = useState('');
-  const [productFeedExportPath, setProductFeedExportPath] = useState('');
-  const [statusMsg, setStatusMsg] = useState('Loading config...');
+  const [enableExtension, setEnableExtension] = useState("no");
+  const [environment, setEnvironment] = useState("staging");
+  const [clientName, setClientName] = useState("");
+  const [enableProductFamilies, setEnableProductFamilies] = useState("no");
+  const [deploymentZone, setDeploymentZone] = useState("Main Site");
+  const [locale, setLocale] = useState("");
+  const [cloudSeoKey, setCloudSeoKey] = useState("");
+  const [enableBvPixel, setEnableBvPixel] = useState("no");
+  const [debug, setDebug] = useState("no");
+  const [sftpUsername, setSftpUsername] = useState("");
+  const [sftpPassword, setSftpPassword] = useState("");
+  const [sftpHostName, setSftpHostName] = useState("");
+  const [productFeedFilename, setProductFeedFilename] = useState("");
+  const [productFeedExportPath, setProductFeedExportPath] = useState("");
+  const [statusMsg, setStatusMsg] = useState("Loading config...");
 
   useEffect(() => {
     async function loadConfig() {
@@ -35,24 +35,24 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
         if (!resp.ok) throw new Error(`GET failed: HTTP ${resp.status}`);
         const data = await resp.json();
         if (data) {
-          setEnableExtension(data.enableExtension || 'no');
-          setEnvironment(data.environment || 'staging');
-          setClientName(data.clientName || '');
-          setEnableProductFamilies(data.enableProductFamilies || 'no');
-          setDeploymentZone(data.deploymentZone || 'Main Site');
-          setLocale(data.locale || '');
-          setCloudSeoKey(data.cloudSeoKey || '');
-          setEnableBvPixel(data.enableBvPixel || 'no');
-          setDebug(data.debug || 'no');
-          setSftpUsername(data.sftpUsername || '');
-          setSftpPassword(data.sftpPassword || '');
-          setSftpHostName(data.sftpHostName || '');
-          setProductFeedFilename(data.productFeedFilename || '');
-          setProductFeedExportPath(data.productFeedExportPath || '');
+          setEnableExtension(data.enableExtension || "no");
+          setEnvironment(data.environment || "staging");
+          setClientName(data.clientName || "");
+          setEnableProductFamilies(data.enableProductFamilies || "no");
+          setDeploymentZone(data.deploymentZone || "Main Site");
+          setLocale(data.locale || "");
+          setCloudSeoKey(data.cloudSeoKey || "");
+          setEnableBvPixel(data.enableBvPixel || "no");
+          setDebug(data.debug || "no");
+          setSftpUsername(data.sftpUsername || "");
+          setSftpPassword(data.sftpPassword || "");
+          setSftpHostName(data.sftpHostName || "");
+          setProductFeedFilename(data.productFeedFilename || "");
+          setProductFeedExportPath(data.productFeedExportPath || "");
         }
-        setStatusMsg('Config loaded successfully');
+        setStatusMsg("Config loaded successfully");
       } catch (err) {
-        console.error('Fetch error:', err);
+        console.error("Fetch error:", err);
         setStatusMsg(`Error loading config: ${err.message}`);
       }
     }
@@ -79,8 +79,8 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
 
     try {
       const resp = await fetch(`${actionUrl}api-store-config`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (!resp.ok) throw new Error(`POST failed: HTTP ${resp.status}`);
@@ -144,7 +144,6 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
       </Form>
     </View>
   );
-
 
   return (
     <View padding="size-250">
