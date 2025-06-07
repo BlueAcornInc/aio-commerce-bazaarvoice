@@ -1,6 +1,6 @@
 {
-  "name": "bazaarvoice",
-  "version": "0.0.1",
+  "name": "Bazaarvoice",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "@adobe/aio-cli": "^10.3.2",
@@ -75,6 +75,10 @@
     {
       "name": "Doug Hatcher",
       "email": "doug.hatcher@blueacornici.com"
+    },
+    {
+      "name": "Maxime Carey",
+      "email": "maxime.carey@blueacornici.com"
     }
   ]
 }
