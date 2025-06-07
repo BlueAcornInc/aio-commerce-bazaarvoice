@@ -1,9 +1,9 @@
 // getConfig.js
 //https://github.com/adobe/amazon-sales-channel-app-builder/blob/main/actions-src/api/account/runtime/getCredentials.ts
-const ConfigEncryptionHelper = require('../../../../shared/runtime/security/ConfigEncryptionHelper');
-const { readFile } = require('../../../../shared/libFileRepository');
-const { Core } = require('@adobe/aio-sdk');
-const logger = Core.Logger('getConfig', { level: 'info' });
+const ConfigEncryptionHelper = require("../../../../shared/runtime/security/ConfigEncryptionHelper");
+const { readFile } = require("../../../../shared/libFileRepository");
+const { Core } = require("@adobe/aio-sdk");
+const logger = Core.Logger("getConfig", { level: "info" });
 
 async function main(params) {
   const { ENCRYPTION_KEY, ENCRYPTION_IV, RUNTIME_NAMESPACE } = params;
@@ -14,20 +14,20 @@ async function main(params) {
   try {
     // Read the encrypted file as a buffer
     const encryptedBuffer = await readFile(filePath);
-    const encryptedConfig = JSON.parse(encryptedBuffer.toString('utf8'));
+    const encryptedConfig = JSON.parse(encryptedBuffer.toString("utf8"));
 
     // Decrypt the configuration
     const config = helper.decryptConfig(encryptedConfig);
 
     // Log and return the decrypted configuration
-    logger.info('Configuration retrieved successfully.');
+    logger.info("Configuration retrieved successfully.");
     return {
       statusCode: 200,
       body: config,
     };
   } catch (error) {
-    if (error.code === 'ERROR_FILE_NOT_EXISTS' || error.code === 'ENOENT') {
-      logger.info('No configuration file found, returning empty config.');
+    if (error.code === "ERROR_FILE_NOT_EXISTS" || error.code === "ENOENT") {
+      logger.info("No configuration file found, returning empty config.");
       return {
         statusCode: 200,
         body: {},
@@ -36,7 +36,7 @@ async function main(params) {
     logger.error(`Error retrieving configuration from ${filePath}:`, error);
     return {
       statusCode: 500,
-      body: { error: 'Failed to retrieve and decrypt configuration.' },
+      body: { error: "Failed to retrieve and decrypt configuration." },
     };
   }
 }

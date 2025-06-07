@@ -6,8 +6,20 @@ application:
         actions:
           api-store-config:
             function: src/actions/api/config/runtime/storeConfig.js
-            web: 'yes'
-            runtime: 'nodejs:18'
+            web: "yes"
+            runtime: "nodejs:18"
+            inputs:
+              LOG_LEVEL: debug
+              ENCRYPTION_KEY: $ENCRYPTION_KEY
+              ENCRYPTION_IV: $ENCRYPTION_IV
+              RUNTIME_NAMESPACE: $AIO_RUNTIME_NAMESPACE
+            annotations:
+              require-adobe-auth: true
+              final: true
+          api-get-config:
+            function: src/actions/api/config/runtime/getConfig.js
+            web: "yes"
+            runtime: "nodejs:18"
             inputs:
               LOG_LEVEL: debug
               ENCRYPTION_KEY: $ENCRYPTION_KEY
@@ -19,3 +31,7 @@ application:
 extensions:
   commerce/backend-ui/1:
     $include: src/commerce-backend-ui-1/ext.config.yaml
+requiredProducts:
+  - code: COMMC
+    minVersion: 2.4.7
+    maxVersion: 2.4.99

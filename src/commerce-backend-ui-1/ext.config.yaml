@@ -11,8 +11,8 @@ runtimeManifest:
       actions:
         registration:
           function: actions/registration/index.js
-          web: 'yes'
-          runtime: 'nodejs:18'
+          web: "yes"
+          runtime: "nodejs:18"
           inputs:
             LOG_LEVEL: debug
           annotations:

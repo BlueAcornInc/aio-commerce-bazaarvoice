@@ -9,8 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { register } from '@adobe/uix-guest';
-import { MainPage } from './MainPage';
+import { register } from "@adobe/uix-guest";
+import { MainPage } from "./MainPage";
 
 export default function ExtensionRegistration(props) {
   init().catch(console.error);
@@ -18,7 +18,7 @@ export default function ExtensionRegistration(props) {
 }
 
 const init = async () => {
-  const extensionId = 'bazaar-voice';
+  const extensionId = "bazaar-voice";
 
   await register({
     id: extensionId,
