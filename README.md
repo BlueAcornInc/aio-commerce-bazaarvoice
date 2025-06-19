@@ -3,7 +3,7 @@
 Bazaarvoice Credentials for Adobe Commerce (App Builder Extension)
 ==================================================================
 
-This Adobe App Builder extension provides a secure and efficient way for Adobe Commerce merchants to store and consume their Bazaarvoice credentials. All configurations, including sensitive credentials, are managed directly within the Adobe Commerce Admin backend. The App Builder application then securely retrieves and processes these settings for frontend consumption via API calls, streamlining the process of displaying user-generated content and leveraging Bazaarvoice's powerful features.
+This Adobe App Builder extension provides a secure and efficient way for Adobe Commerce merchants to store and consume their Bazaarvoice credentials. All configurations, including sensitive credentials, are managed directly within the Adobe Commerce Admin backend. The App Builder application securely retrieves these settings and makes them available to your storefront via API, enabling the display of user-generated content and integration with Bazaarvoice services.
 
 * * * * *
 
