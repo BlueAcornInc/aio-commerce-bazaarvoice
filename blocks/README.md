@@ -1,4 +1,4 @@
-# Bazaarvoice Block Collection
+# Storefront Blocks
 
 Blocks are how display reviews from within Edge Delivery Services and Adobe Commerce Storefront. They are easy to setup and configure, but require the app to be properly configured before they can work. 
 
