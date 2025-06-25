@@ -12,9 +12,9 @@ This guide assumes you have a compatible Edge Delivery Services installation alr
 
 3. In the _content repository_ `configs` and `configs-dev` sheets, add the following and publish:
 
-| key                   | value                                 |
-|-----------------------|---------------------------------------|
-| bazaarvoice-config-url| https://xxxxxx-bazaarvoice-stage.adobeioruntime.net/api/v1/web/aio-commerce-bazaarvoice-app/bazaarvoice-config |
+| key                    | value                                                                                                          |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
+| bazaarvoice-config-url | https://xxxxxx-bazaarvoice-stage.adobeioruntime.net/api/v1/web/aio-commerce-bazaarvoice-app/bazaarvoice-config |
 
 This value can be found when you deploy the app in the deployment output in the console.
 
