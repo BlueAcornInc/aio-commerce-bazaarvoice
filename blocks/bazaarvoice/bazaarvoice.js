@@ -1,9 +1,9 @@
-import { getConfigValue } from '../../scripts/configs.js';
-import { loadScript } from '../../scripts/aem.js';
+import { getConfigValue } from "../../scripts/configs.js";
+import { loadScript } from "../../scripts/aem.js";
 
 export default async function decorate(block) {
   const buildBlock = (configs) => {
-    const bazaarVoiceReviewsEl = document.createElement('div');
+    const bazaarVoiceReviewsEl = document.createElement("div");
     configs?.forEach((config) => {
       bazaarVoiceReviewsEl.setAttribute(config.attr, config.value);
     });
@@ -11,19 +11,19 @@ export default async function decorate(block) {
   };
 
   const config = {
-    baseUrl: 'https://apps.bazaarvoice.com/deployments',
-    endpoint: await getConfigValue('bazaarvoice-config-url'),
+    baseUrl: "https://apps.bazaarvoice.com/deployments",
+    endpoint: await getConfigValue("bazaarvoice-config-url"),
   };
 
   const widgetConfig = [
     {
-      attr: 'data-bv-show',
-      value: 'reviews',
+      attr: "data-bv-show",
+      value: "reviews",
     },
     {
-      attr: 'data-bv-product-id',
-      value: (window?.location?.pathname ?? '').slice(
-        (window?.location.pathname ?? '').lastIndexOf('/') + 1,
+      attr: "data-bv-product-id",
+      value: (window?.location?.pathname ?? "").slice(
+        (window?.location.pathname ?? "").lastIndexOf("/") + 1,
       ),
     },
   ];
@@ -46,6 +46,6 @@ export default async function decorate(block) {
       addLoaderScript(config);
     })
     .catch((error) => {
-      console.error('Fetch error:', error);
+      console.error("Fetch error:", error);
     });
 }

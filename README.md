@@ -2,7 +2,6 @@
 
 This Adobe App Builder extension provides a secure and efficient way for Adobe Commerce merchants to store and consume their Bazaarvoice credentials. All configurations, including sensitive credentials, are managed directly within the Adobe Commerce Admin backend. The App Builder application securely retrieves these settings and makes them available to your storefront via API, enabling the display of user-generated content and integration with Bazaarvoice services.
 
-
 ## Table of Contents
 
 - [Features](#features)
@@ -185,7 +184,7 @@ Once the App Builder application is deployed and its settings are configured in 
 
 **Adobe Commerce Storefont and Edge Delivery Services Blocks**
 
-Refer to the [blocks setup instructions](./blocks/README.md) to set this up in Adobe Commerce Storefront and Edge Delivery Services. 
+Refer to the [blocks setup instructions](./blocks/README.md) to set this up in Adobe Commerce Storefront and Edge Delivery Services.
 
 **Example Frontend API Call (Conceptual):**
 
