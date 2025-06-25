@@ -15,6 +15,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Route, Routes, HashRouter } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
 
+/**
+ *
+ * @param props
+ */
 function App(props) {
   // use exc runtime event handlers
   // respond to configuration change events (e.g. user switches org)
@@ -49,9 +53,20 @@ function App(props) {
   // Methods
 
   // error handler on UI rendering failure
+  /**
+   *
+   * @param e
+   * @param componentStack
+   */
   function onError(e, componentStack) {}
 
   // component to show if UI fails rendering
+  /**
+   *
+   * @param root0
+   * @param root0.componentStack
+   * @param root0.error
+   */
   function fallbackComponent({ componentStack, error }) {
     return (
       <React.Fragment>

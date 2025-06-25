@@ -32,12 +32,20 @@ try {
   bootstrapRaw();
 }
 
+/**
+ *
+ * @param runtime
+ * @param ims
+ */
 function renderApp(runtime, ims) {
   const client = createRoot(document.getElementById("root"));
 
   client.render(<App runtime={runtime} ims={ims} />);
 }
 
+/**
+ *
+ */
 function bootstrapRaw() {
   /* **here you can mock the exc runtime and ims objects** */
   const mockRuntime = {
@@ -46,6 +54,9 @@ function bootstrapRaw() {
   renderApp(mockRuntime, {});
 }
 
+/**
+ *
+ */
 function bootstrapInExcShell() {
   // get the Experience Cloud Runtime object
   const runtime = Runtime();

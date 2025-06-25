@@ -31,7 +31,7 @@ export async function callAction(
 
   console.log(actions);
   const res = await fetch(actions[action], {
-    method: method,
+    method,
     headers: {
       "Content-Type": "application/json",
       "x-gw-ims-org-id": props.imsOrgId,

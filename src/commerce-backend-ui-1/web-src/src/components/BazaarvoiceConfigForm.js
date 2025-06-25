@@ -18,6 +18,10 @@ import {
 
 const DEBUG = false;
 
+/**
+ *
+ * @param props
+ */
 export default function BazaarvoiceConfigForm(props) {
   const [formState, setFormState] = useState({
     enableExtension: "no",

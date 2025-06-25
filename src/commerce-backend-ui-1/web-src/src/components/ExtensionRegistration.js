@@ -13,6 +13,10 @@ import { register } from "@adobe/uix-guest";
 import { MainPage } from "./MainPage";
 import { EXTENSION_ID } from "../constants";
 
+/**
+ *
+ * @param props
+ */
 export default function ExtensionRegistration(props) {
   init().catch(console.error);
   return <MainPage runtime={props.runtime} ims={props.ims} />;

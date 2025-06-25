@@ -16,33 +16,36 @@ governing permissions and limitations under the License.
  *
  * @throws {Error} error in case of failure, most likely when the app is not running in
  * the Experience Cloud Shell.
- *
  */
 /* eslint-disable-next-line */
 (function (e, t) {
-  if (t.location === t.parent.location)
+  if (t.location === t.parent.location) {
     throw new Error("Module Runtime: Needs to be within an iframe!");
-  var o = (function (e) {
-    var t = new URL(e.location.href).searchParams.get("_mr");
+  }
+  let o = (function (e) {
+    const t = new URL(e.location.href).searchParams.get("_mr");
     return t || !e.EXC_US_HMR
       ? t
       : e.sessionStorage.getItem("unifiedShellMRScript");
   })(t);
   if (!o) throw new Error("Module Runtime: Missing script!");
-  if ("https:" !== (o = new URL(decodeURIComponent(o))).protocol)
+  if ((o = new URL(decodeURIComponent(o))).protocol !== "https:") {
     throw new Error("Module Runtime: Must be HTTPS!");
+  }
   if (
     !/^(exc-unifiedcontent\.)?experience(-qa|-stage|-cdn|-cdn-stage)?\.adobe\.(com|net)$/.test(
       o.hostname,
     ) &&
     !/localhost\.corp\.adobe\.com$/.test(o.hostname)
-  )
+  ) {
     throw new Error("Module Runtime: Invalid domain!");
-  if (!/\.js$/.test(o.pathname))
+  }
+  if (!/\.js$/.test(o.pathname)) {
     throw new Error("Module Runtime: Must be a JavaScript file!");
+  }
   t.EXC_US_HMR &&
     t.sessionStorage.setItem("unifiedShellMRScript", o.toString());
-  var n = e.createElement("script");
+  let n = e.createElement("script");
   (n.async = 1),
     (n.src = o.toString()),
     (n.onload = n.onreadystatechange =

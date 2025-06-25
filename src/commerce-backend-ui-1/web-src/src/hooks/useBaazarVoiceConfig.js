@@ -1,16 +1,25 @@
 import { useState, useEffect } from "react";
 import { callAction } from "../utils";
 
+/**
+ *
+ * @param props
+ * @param setFormState
+ */
 export function useBazaarvoiceConfigLoader(props, setFormState) {
   const [statusMsg, setStatusMsg] = useState("Loading config...");
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    /**
+     *
+     */
     async function loadConfig() {
       try {
         const data = await callAction(props, "admin-ui-sdk/config", "GET");
-        if (data)
+        if (data) {
           setFormState((prevState) => ({ ...prevState, ...data.config }));
+        }
         setStatusMsg("Config loaded successfully");
         setHasError(false);
       } catch (err) {
@@ -25,10 +34,18 @@ export function useBazaarvoiceConfigLoader(props, setFormState) {
   return { statusMsg, hasError };
 }
 
+/**
+ *
+ * @param props
+ */
 export function useBazaarvoiceConfigSaver(props) {
   const [statusMsg, setStatusMsg] = useState("");
   const [hasError, setHasError] = useState(false);
 
+  /**
+   *
+   * @param config
+   */
   async function saveConfig(config) {
     try {
       await callAction(props, "admin-ui-sdk/config", "POST", config);
