@@ -1,6 +1,4 @@
----
-# Bazaarvoice Credentials for Adobe Commerce (App Builder Extension)
----
+# Bazaarvoice by Blue Acorn
 
 This Adobe App Builder extension provides a secure and efficient way for Adobe Commerce merchants to store and consume their Bazaarvoice credentials. All configurations, including sensitive credentials, are managed directly within the Adobe Commerce Admin backend. The App Builder application securely retrieves these settings and makes them available to your storefront via API, enabling the display of user-generated content and integration with Bazaarvoice services.
 
@@ -185,6 +183,10 @@ For **local development**, these are typically set in your `.env` file within yo
 
 Once the App Builder application is deployed and its settings are configured in the Adobe Commerce backend, your Adobe Commerce frontend (or any other client-side application) can consume the Bazaarvoice configuration and credentials through the App Builder API endpoint.
 
+**Adobe Commerce Storefont and Edge Delivery Services Blocks**
+
+Refer to the [blocks setup instructions](./blocks/README.md) to set this up in Adobe Commerce Storefront and Edge Delivery Services. 
+
 **Example Frontend API Call (Conceptual):**
 
 Your frontend application will make an AJAX or Fetch request to the App Builder endpoint exposed by this extension. The specific URL will be available in your Adobe Developer Console for the deployed action.
@@ -232,8 +234,8 @@ For detailed instructions on setting up your development environment, testing, a
 
 For any issues, questions, or feature requests, please refer to the following:
 
-- **Issue Tracker:** [Link to your GitHub Issues or similar platform]
-- **Contact:** [Your support email or contact method]
+- **Issue Tracker:** [Github Issues Tracker](https://github.com/BlueAcornInc/aio-commerce-bazaarvoice/issues)
+- **Contact:** [Blue Acorn Apps Team](mailto:apps@blueacornici.com)
 
 ---
 
