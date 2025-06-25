@@ -1,8 +1,8 @@
-const { Core } = require('@adobe/aio-sdk')
+const { Core } = require("@adobe/aio-sdk");
 const {
   readConfiguration,
-  writeConfiguration
-} = require('../../../shared/configurationHelper')
+  writeConfiguration,
+} = require("../../../shared/configurationHelper");
 
 /**
  * Main admin action
@@ -10,12 +10,12 @@ const {
  * @param {object} params Action input param
  * @returns {object} Response object
  */
-async function main (params) {
-  const logger = Core.Logger('baazarvoice-config', { level: 'info' })
-  const name = 'baazarvoice'
+async function main(params) {
+  const logger = Core.Logger("baazarvoice-config", { level: "info" });
+  const name = "baazarvoice";
 
   // Check the method
-  if (params.__ow_method === 'post') {
+  if (params.__ow_method === "post") {
     const {
       enableExtension,
       environment,
@@ -25,20 +25,20 @@ async function main (params) {
       locale,
       cloudSeoKey,
       enableBvPixel,
-      debug
-    } = params.payload
+      debug,
+    } = params.payload;
 
     if (!enableExtension || !environment || !clientName) {
-      logger.error('Missing field for request', params)
+      logger.error("Missing field for request", params);
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           error:
-            'Missing required fields (enableExtension, environment, clientName).',
-          receivedParams: params
-        })
-      }
+            "Missing required fields (enableExtension, environment, clientName).",
+          receivedParams: params,
+        }),
+      };
     }
 
     const configToStore = {
@@ -50,65 +50,65 @@ async function main (params) {
       locale,
       cloudSeoKey,
       enableBvPixel,
-      debug
-    }
+      debug,
+    };
 
     try {
-      await writeConfiguration(configToStore, name, params)
+      await writeConfiguration(configToStore, name, params);
 
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           success: true,
-          message: 'Saved BaazarVoice config',
-          savedConfig: configToStore
-        })
-      }
+          message: "Saved BaazarVoice config",
+          savedConfig: configToStore,
+        }),
+      };
     } catch (error) {
-      logger.error(error)
+      logger.error(error);
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           success: false,
-          message: 'Error while saving configuration'
-        })
-      }
+          message: "Error while saving configuration",
+        }),
+      };
     }
-  } else if (params.__ow_method === 'get') {
+  } else if (params.__ow_method === "get") {
     try {
-      const loadedConfig = await readConfiguration(params, name)
+      const loadedConfig = await readConfiguration(params, name);
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           success: true,
-          message: 'Loaded ShipStation config',
-          config: loadedConfig
-        })
-      }
+          message: "Loaded ShipStation config",
+          config: loadedConfig,
+        }),
+      };
     } catch (error) {
-      logger.error(error)
+      logger.error(error);
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           success: false,
-          message: 'Error while loading configuration'
-        })
-      }
+          message: "Error while loading configuration",
+        }),
+      };
     }
   } else {
     return {
       statusCode: 405,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        error: 'Method Not Allowed',
-        allowedMethods: ['GET', 'POST']
-      })
-    }
+        error: "Method Not Allowed",
+        allowedMethods: ["GET", "POST"],
+      }),
+    };
   }
 }
 
-exports.main = main
+exports.main = main;

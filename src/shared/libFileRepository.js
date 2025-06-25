@@ -1,7 +1,7 @@
 // libFileRepository.js
 // https://github.com/adobe/amazon-sales-channel-app-builder/blob/main/actions-src/shared/repository/libFilesRepository.ts
 // eslint-disable-next-line node/no-extraneous-require
-const filesLib = require('@adobe/aio-lib-files')
+const filesLib = require("@adobe/aio-lib-files");
 
 /**
  * Write content to a file
@@ -9,11 +9,11 @@ const filesLib = require('@adobe/aio-lib-files')
  * @param {string} filePath Output file path
  * @param {string|Buffer} data Content to write
  */
-async function writeFile (filePath, data) {
-  const files = await filesLib.init()
+async function writeFile(filePath, data) {
+  const files = await filesLib.init();
   await files.write(filePath, data, {
-    contentType: 'application/octet-stream'
-  })
+    contentType: "application/octet-stream",
+  });
 }
 
 /**
@@ -22,10 +22,10 @@ async function writeFile (filePath, data) {
  * @param {string} filePath Input file path
  * @returns {Promise<Buffer>} File content
  */
-async function readFile (filePath) {
-  const files = await filesLib.init()
-  const fileBuffer = await files.read(filePath)
-  return fileBuffer
+async function readFile(filePath) {
+  const files = await filesLib.init();
+  const fileBuffer = await files.read(filePath);
+  return fileBuffer;
 }
 
-module.exports = { writeFile, readFile }
+module.exports = { writeFile, readFile };

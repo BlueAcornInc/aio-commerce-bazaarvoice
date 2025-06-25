@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 /**
  * @returns {object} Registration object
  */
-async function main () {
-  const extensionId = 'Bazaarvoice'
+async function main() {
+  const extensionId = "Bazaarvoice";
 
   return {
     statusCode: 200,
@@ -23,23 +23,23 @@ async function main () {
         menuItems: [
           {
             id: `${extensionId}::first`,
-            title: 'General Configuration',
+            title: "General Configuration",
             parent: `${extensionId}::apps`,
-            sortOrder: 1
+            sortOrder: 1,
           },
           {
             id: `${extensionId}::apps`,
-            title: 'Bazaarvoice',
+            title: "Bazaarvoice",
             isSection: true,
-            sortOrder: 100
-          }
+            sortOrder: 100,
+          },
         ],
         page: {
-          title: 'Bazaarvoice Configuration'
-        }
-      }
-    }
-  }
+          title: "Bazaarvoice Configuration",
+        },
+      },
+    },
+  };
 }
 
-exports.main = main
+exports.main = main;
