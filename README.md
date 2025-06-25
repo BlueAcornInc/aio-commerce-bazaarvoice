@@ -247,9 +247,3 @@ We welcome contributions! If you'd like to contribute to this project, please fo
 3.  Make your changes and ensure they adhere to our coding standards.
 4.  Write clear and concise commit messages.
 5.  Submit a pull request.
-
----
-
-## License
-
-This extension is released under the [Specify your license, e.g., MIT License, Apache 2.0 License]. See the `LICENSE` file for more details.
