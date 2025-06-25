@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -8,105 +8,50 @@ import {
   View,
   Picker,
   Item,
-  Switch,
   Grid,
   Text,
 } from "@adobe/react-spectrum";
+import {
+  useBazaarvoiceConfigLoader,
+  useBazaarvoiceConfigSaver,
+} from "../hooks/useBaazarVoiceConfig";
 
-const DEBUG = false; // Set to true for detailed error messages
+const DEBUG = false;
 
-export default function BazaarvoiceConfigForm({ actionUrl }) {
-  const [enableExtension, setEnableExtension] = useState("no");
-  const [environment, setEnvironment] = useState("staging");
-  const [clientName, setClientName] = useState("");
-  const [enableProductFamilies, setEnableProductFamilies] = useState("no");
-  const [deploymentZone, setDeploymentZone] = useState("Main Site");
-  const [locale, setLocale] = useState("");
-  const [cloudSeoKey, setCloudSeoKey] = useState("");
-  const [enableBvPixel, setEnableBvPixel] = useState("no");
-  const [debug, setDebug] = useState("no");
-  const [sftpUsername, setSftpUsername] = useState("");
-  const [sftpPassword, setSftpPassword] = useState("");
-  const [sftpHostName, setSftpHostName] = useState("");
-  const [productFeedFilename, setProductFeedFilename] = useState("");
-  const [productFeedExportPath, setProductFeedExportPath] = useState("");
-  const [statusMsg, setStatusMsg] = useState("Loading config...");
-  const [hasError, setHasError] = useState(false);
+export default function BazaarvoiceConfigForm(props) {
+  const [formState, setFormState] = useState({
+    enableExtension: "no",
+    environment: "staging",
+    clientName: "",
+    enableProductFamilies: "no",
+    deploymentZone: "Main Site",
+    locale: "",
+    cloudSeoKey: "",
+    enableBvPixel: "no",
+    debug: "no",
+    /* sftpUsername: "",
+    sftpPassword: "",
+    sftpHostName: "",
+    productFeedFilename: "",
+    productFeedExportPath: "", */
+  });
 
-  useEffect(() => {
-    async function loadConfig() {
-      try {
-        const resp = await fetch(`${actionUrl}api-get-config`);
-        if (!resp.ok) throw new Error(`GET failed: HTTP ${resp.status}`);
-        const data = await resp.json();
-        if (data) {
-          setEnableExtension(data.enableExtension || "no");
-          setEnvironment(data.environment || "staging");
-          setClientName(data.clientName || "");
-          setEnableProductFamilies(data.enableProductFamilies || "no");
-          setDeploymentZone(data.deploymentZone || "Main Site");
-          setLocale(data.locale || "");
-          setCloudSeoKey(data.cloudSeoKey || "");
-          setEnableBvPixel(data.enableBvPixel || "no");
-          setDebug(data.debug || "no");
-          setSftpUsername(data.sftpUsername || "");
-          setSftpPassword(data.sftpPassword || "");
-          setSftpHostName(data.sftpHostName || "");
-          setProductFeedFilename(data.productFeedFilename || "");
-          setProductFeedExportPath(data.productFeedExportPath || "");
-        }
-        setStatusMsg("Config loaded successfully");
-        setHasError(false);
-      } catch (err) {
-        setHasError(true);
-        if (DEBUG) {
-          setStatusMsg(`Error loading config: ${err.message}`);
-        } else {
-          setStatusMsg("");
-          console.log("Error loading config:", err);
-        }
-      }
-    }
-    loadConfig();
-  }, [actionUrl]);
+  const { statusMsg: loadStatusMsg, hasError: loadHasError } =
+    useBazaarvoiceConfigLoader(props, setFormState);
 
-  async function handleSave() {
-    const body = {
-      enableExtension,
-      environment,
-      clientName,
-      enableProductFamilies,
-      deploymentZone,
-      locale,
-      cloudSeoKey,
-      enableBvPixel,
-      debug,
-      sftpUsername,
-      sftpPassword,
-      sftpHostName,
-      productFeedFilename,
-      productFeedExportPath,
-    };
+  const {
+    saveConfig,
+    statusMsg: saveStatusMsg,
+    hasError: saveHasError,
+  } = useBazaarvoiceConfigSaver(props);
 
-    try {
-      const resp = await fetch(`${actionUrl}api-store-config`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (!resp.ok) throw new Error(`POST failed: HTTP ${resp.status}`);
-      setStatusMsg(`Configuration saved successfully`);
-      setHasError(false);
-    } catch (err) {
-      setHasError(true);
-      if (DEBUG) {
-        setStatusMsg(`Error saving config: ${err.message}`);
-      } else {
-        setStatusMsg("");
-        console.error("Error saving config:", err);
-      }
-    }
-  }
+  const handleChange = (name, value) => {
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    saveConfig(formState);
+  };
 
   const links = [
     { label: "Blue Acorn iCi", url: "https://blueacornici.com/" },
@@ -124,168 +69,153 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
 
   return (
     <View padding="size-250">
-      {DEBUG && statusMsg && (
+      {DEBUG && loadStatusMsg && (
         <Content marginBottom="size-200" UNSAFE_style={{ color: "#d2691e" }}>
-          {statusMsg}
+          {loadStatusMsg}
         </Content>
       )}
-
       <Heading level={3}>Storefront Blocks</Heading>
-
       <Content>
         Bazaarvoice must also be configured in the Adobe Commerce Storefront
         configs.json.
         <br />
         <br />
       </Content>
-
       <Form maxWidth="size-6000">
-        {/* General Configuration Section */}
         <Heading level={3} marginTop="size-200" marginBottom="size-100">
           General Configuration
         </Heading>
+
         <Picker
           label="Enable Bazaarvoice Extension"
-          selectedKey={enableExtension}
-          onSelectionChange={setEnableExtension}
+          selectedKey={formState.enableExtension}
+          onSelectionChange={(val) => handleChange("enableExtension", val)}
           isRequired
-          isDisabled={hasError}
+          isDisabled={loadHasError}
         >
           <Item key="yes">Yes</Item>
           <Item key="no">No</Item>
         </Picker>
+
         <Picker
           label="Environment"
-          selectedKey={environment}
-          onSelectionChange={setEnvironment}
+          selectedKey={formState.environment}
+          onSelectionChange={(val) => handleChange("environment", val)}
           isRequired
-          isDisabled={hasError}
+          isDisabled={loadHasError}
         >
           <Item key="staging">Staging</Item>
           <Item key="production">Production</Item>
         </Picker>
+
         <TextField
           label="Client Name"
-          value={clientName}
-          onChange={setClientName}
+          value={formState.clientName}
+          onChange={(val) => handleChange("clientName", val)}
           isRequired
-          isDisabled={hasError}
+          isDisabled={loadHasError}
         />
+
         <Picker
           label="Enable BV Product Families"
-          selectedKey={enableProductFamilies}
-          onSelectionChange={setEnableProductFamilies}
-          isDisabled={hasError}
+          selectedKey={formState.enableProductFamilies}
+          onSelectionChange={(val) =>
+            handleChange("enableProductFamilies", val)
+          }
+          isDisabled={loadHasError}
         >
           <Item key="yes">Yes</Item>
           <Item key="no">No</Item>
         </Picker>
+
         <TextField
           label="Deployment Zone"
-          value={deploymentZone}
-          onChange={setDeploymentZone}
-          defaultValue="Main Site"
-          isDisabled={hasError}
+          value={formState.deploymentZone}
+          onChange={(val) => handleChange("deploymentZone", val)}
+          isDisabled={loadHasError}
         />
+
         <TextField
-          isDisabled={hasError}
           label="Locale"
-          value={locale}
-          onChange={setLocale}
+          value={formState.locale}
+          onChange={(val) => handleChange("locale", val)}
+          isDisabled={loadHasError}
         />
 
-        {/* Expanded General Settings Section
-
-        <TextField
-          label="Client Name"
-          value={clientName}
-          onChange={setClientName}
-          isRequired
-          isDisabled={hasError}
-        />
-        <Picker
-          label="Enable BV Product Families"
-          selectedKey={enableProductFamilies}
-          onSelectionChange={setEnableProductFamilies}
-          isDisabled={hasError}
-        >
-          <Item key="yes">Yes</Item>
-          <Item key="no">No</Item>
-        </Picker>
-        <TextField
-          label="Deployment Zone"
-          value={deploymentZone}
-          onChange={setDeploymentZone}
-          defaultValue="Main Site"
-          isDisabled={hasError}
-        />
-        <TextField label="Locale" value={locale} onChange={setLocale} sDisabled={hasError} />
         <TextField
           label="Cloud SEO Key"
-          value={cloudSeoKey}
-          onChange={setCloudSeoKey}
-          isDisabled={hasError}
+          value={formState.cloudSeoKey}
+          onChange={(val) => handleChange("cloudSeoKey", val)}
+          isDisabled={loadHasError}
         />
+
         <Picker
           label="Enable BV Pixel"
-          selectedKey={enableBvPixel}
-          onSelectionChange={setEnableBvPixel}
-          isDisabled={hasError}
+          selectedKey={formState.enableBvPixel}
+          onSelectionChange={(val) => handleChange("enableBvPixel", val)}
+          isDisabled={loadHasError}
         >
           <Item key="yes">Yes</Item>
           <Item key="no">No</Item>
         </Picker>
-        <Picker isDisabled={hasError} label="Debug" selectedKey={debug} onSelectionChange={setDebug}>
+
+        <Picker
+          label="Debug"
+          selectedKey={formState.debug}
+          onSelectionChange={(val) => handleChange("debug", val)}
+          isDisabled={loadHasError}
+        >
           <Item key="yes">Yes</Item>
           <Item key="no">No</Item>
         </Picker>
-        */}
-        {/* Feed Section
-        <Heading level={2} marginTop="size-200" marginBottom="size-100">
-          Feed
-        </Heading>
+
+        {/*
         <TextField
           label="SFTP Username"
-          value={sftpUsername}
-          onChange={setSftpUsername}
-          isDisabled={hasError}
+          value={formState.sftpUsername}
+          onChange={(val) => handleChange("sftpUsername", val)}
+          isDisabled={loadHasError}
         />
+
         <TextField
           label="SFTP Password"
-          value={sftpPassword}
-          onChange={setSftpPassword}
+          value={formState.sftpPassword}
+          onChange={(val) => handleChange("sftpPassword", val)}
           type="password"
-          isDisabled={hasError}
+          isDisabled={loadHasError}
         />
+
         <TextField
           label="SFTP Host Name"
-          value={sftpHostName}
-          onChange={setSftpHostName}
-          isDisabled={hasError}
+          value={formState.sftpHostName}
+          onChange={(val) => handleChange("sftpHostName", val)}
+          isDisabled={loadHasError}
         />
+
         <TextField
           label="Product Feed Filename"
-          value={productFeedFilename}
-          onChange={setProductFeedFilename}
-          isDisabled={hasError}
+          value={formState.productFeedFilename}
+          onChange={(val) => handleChange("productFeedFilename", val)}
+          isDisabled={loadHasError}
         />
+
         <TextField
           label="Product Feed Export Path"
-          value={productFeedExportPath}
-          onChange={setProductFeedExportPath}
-          isDisabled={hasError}
+          value={formState.productFeedExportPath}
+          onChange={(val) => handleChange("productFeedExportPath", val)}
+          isDisabled={loadHasError}
         />
-*/}
 
-        <Button variant="accent" onPress={handleSave} isDisabled={hasError}>
+        */}
+
+        <Button variant="accent" onPress={handleSave} isDisabled={loadHasError}>
           Save
         </Button>
 
-        {hasError && (
+        {saveHasError && (
           <Content UNSAFE_style={{ color: "#b0b0b0" }}>
             <br />
-            Secure configuration management is not yet supported. Please manage
-            any setting with environment variables.
+            {saveStatusMsg}
           </Content>
         )}
 
@@ -303,7 +233,7 @@ export default function BazaarvoiceConfigForm({ actionUrl }) {
               onClick={() => {
                 window.parent.postMessage(
                   { type: "open-link", url: link.url },
-                  "*"
+                  "*",
                 );
               }}
               role="button"

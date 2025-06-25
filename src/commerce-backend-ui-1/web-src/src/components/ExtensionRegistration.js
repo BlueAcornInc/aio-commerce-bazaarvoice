@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { register } from "@adobe/uix-guest";
 import { MainPage } from "./MainPage";
+import { EXTENSION_ID } from "../constants";
 
 export default function ExtensionRegistration(props) {
   init().catch(console.error);
@@ -18,10 +19,8 @@ export default function ExtensionRegistration(props) {
 }
 
 const init = async () => {
-  const extensionId = "bazaar-voice";
-
   await register({
-    id: extensionId,
+    id: EXTENSION_ID,
     methods: {},
   });
 };

@@ -2,29 +2,29 @@
 
 This guide provides comprehensive instructions and best practices for setting up, developing, testing, and debugging your Adobe App Builder application. It covers both standalone development and integration with Adobe Commerce. This document is intended for developers working on this specific App Builder project.
 
------
+---
 
 ## Table of Contents
 
-  * [Setup](#setup)
-      * [Environment Variables](#environment-variables)
-      * [Adobe I/O Project Linkage](#adobe-io-project-linkage)
-  * [Local Development](#local-development)
-      * [Starting the Local Development Server](#starting-the-local-development-server)
-      * [Running Actions Locally](#running-actions-locally)
-  * [Testing & Coverage](#testing--coverage)
-      * [Running Unit Tests](#running-unit-tests)
-      * [Running End-to-End Tests](#running-end-to-end-tests)
-  * [Debugging in VS Code](#debugging-in-vs-code)
-  * [TypeScript Support for UI](#typescript-support-for-ui)
-  * [Development Without Magento Adobe Commerce](#development-without-magento-adobe-commerce)
-  * [Development With Adobe Commerce](#development-with-adobe-commerce)
-      * [IMS Faking](#ims-faking)
-      * [Next Steps (Configuring App in Adobe Commerce Admin)](#next-steps-configuring-app-in-adobe-commerce-admin)
-  * [Troubleshooting](#troubleshooting)
-  * [Contributing](#contributing)
+- [Setup](#setup)
+  - [Environment Variables](#environment-variables)
+  - [Adobe I/O Project Linkage](#adobe-io-project-linkage)
+- [Local Development](#local-development)
+  - [Starting the Local Development Server](#starting-the-local-development-server)
+  - [Running Actions Locally](#running-actions-locally)
+- [Testing & Coverage](#testing--coverage)
+  - [Running Unit Tests](#running-unit-tests)
+  - [Running End-to-End Tests](#running-end-to-end-tests)
+- [Debugging in VS Code](#debugging-in-vs-code)
+- [TypeScript Support for UI](#typescript-support-for-ui)
+- [Development Without Magento Adobe Commerce](#development-without-magento-adobe-commerce)
+- [Development With Adobe Commerce](#development-with-adobe-commerce)
+  - [IMS Faking](#ims-faking)
+  - [Next Steps (Configuring App in Adobe Commerce Admin)](#next-steps-configuring-app-in-adobe-commerce-admin)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
 
------
+---
 
 ## Setup
 
@@ -119,19 +119,19 @@ While running your local server (`aio app run`), you can debug both your UI and 
 
 If you intend to use TypeScript for your User Interface development:
 
-  * Use the `.tsx` file extension for your React components.
+- Use the `.tsx` file extension for your React components.
 
-  * Add a `tsconfig.json` file to your UI project with the following essential configuration:
+- Add a `tsconfig.json` file to your UI project with the following essential configuration:
 
-    ```json
-    {
-      "compilerOptions": {
-        "jsx": "react"
-      }
+  ```json
+  {
+    "compilerOptions": {
+      "jsx": "react"
     }
-    ```
+  }
+  ```
 
-    This setting instructs the TypeScript compiler to properly handle JSX syntax within your `.tsx` files.
+  This setting instructs the TypeScript compiler to properly handle JSX syntax within your `.tsx` files.
 
 ## Development Without Magento Adobe Commerce
 
@@ -146,9 +146,9 @@ This approach provides the easiest way to develop and test your code, assuming y
     echo "ENCRYPTION_IV=$(openssl rand -hex 16)" >> .env
     ```
 
-      * `aio auth:login`: Authenticates your CLI with Adobe I/O.
-      * `aio app use`: Ensures your project workspace is correctly linked and active.
-      * The `echo` commands generate random hexadecimal strings for `ENCRYPTION_KEY` and `ENCRYPTION_IV` and append them to your `.env` file. Use `>>` to append, so existing `.env` content is preserved.
+    - `aio auth:login`: Authenticates your CLI with Adobe I/O.
+    - `aio app use`: Ensures your project workspace is correctly linked and active.
+    - The `echo` commands generate random hexadecimal strings for `ENCRYPTION_KEY` and `ENCRYPTION_IV` and append them to your `.env` file. Use `>>` to append, so existing `.env` content is preserved.
 
 2.  **Run the Local App:**
 
@@ -164,17 +164,17 @@ This approach provides the easiest way to develop and test your code, assuming y
 
 To test your App Builder application directly within a local Adobe Commerce environment, you need to meet the following prerequisites:
 
-  * **Adobe Commerce Instance:** Have a local Adobe Commerce instance up and running, accessible at `https://localhost:8443`. This instance should be based on the Evergreen repository.
+- **Adobe Commerce Instance:** Have a local Adobe Commerce instance up and running, accessible at `https://localhost:8443`. This instance should be based on the Evergreen repository.
 
-  * **App Builder Repo Location:** Your App Builder repository must be located *inside* the Adobe Commerce root codebase (e.g., within a custom module's `view/adminhtml/web/app-builder` directory).
+- **App Builder Repo Location:** Your App Builder repository must be located _inside_ the Adobe Commerce root codebase (e.g., within a custom module's `view/adminhtml/web/app-builder` directory).
 
-  * **Admin SDK Module:** The `magento/commerce-backend-sdk` module must be installed in your Adobe Commerce `composer.json`. Add the following line to your `require` section:
+- **Admin SDK Module:** The `magento/commerce-backend-sdk` module must be installed in your Adobe Commerce `composer.json`. Add the following line to your `require` section:
 
-    ```json
-    "magento/commerce-backend-sdk": "3.0.0 as 2.3.0",
-    ```
+  ```json
+  "magento/commerce-backend-sdk": "3.0.0 as 2.3.0",
+  ```
 
-  * **IMS Authentication:** Ensure IMS (Identity Management System) authentication is configured and working on your local Adobe Commerce instance.
+- **IMS Authentication:** Ensure IMS (Identity Management System) authentication is configured and working on your local Adobe Commerce instance.
 
 ### IMS Faking
 
@@ -182,7 +182,7 @@ To bypass direct IMS authorization for local development and serve your AIO app 
 
 1.  **Get Node Server Snippet:** Obtain the Node.js server snippet from the Adobe Developer documentation: [https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/configuration/](https://developer.adobe.com/commerce/extensibility/admin-ui-sdk/configuration/)
 
-2.  **Paste and Run in AC Container:** Paste this snippet into a suitable directory *inside your Adobe Commerce PHP container*. After generating the key and certificate as per the instructions in the link above, run the server:
+2.  **Paste and Run in AC Container:** Paste this snippet into a suitable directory _inside your Adobe Commerce PHP container_. After generating the key and certificate as per the instructions in the link above, run the server:
 
     ```bash
     node server.js
@@ -232,13 +232,13 @@ Once the `server.js` is running, follow these steps to integrate and launch your
 
     Under **General configuration**:
 
-      * **Enable Admin UI SDK:** Select `Yes` (This enables the AdobeAdminims module to use the Admin UI SDK.)
+    - **Enable Admin UI SDK:** Select `Yes` (This enables the AdobeAdminims module to use the Admin UI SDK.)
 
     Under **Testing**:
 
-      * **Enable testing:** Select `Yes`
-      * **Local Server Base URL:** Enter `https://localhost:9090/`
-      * **Mock AdobeAdminIms Module:** Select `Yes`
+    - **Enable testing:** Select `Yes`
+    - **Local Server Base URL:** Enter `https://localhost:9090/`
+    - **Mock AdobeAdminIms Module:** Select `Yes`
 
 6.  **Save Configuration:** Click the "Save Config" button.
 
@@ -250,19 +250,19 @@ Once the `server.js` is running, follow these steps to integrate and launch your
 
 This section provides solutions to common issues encountered during development.
 
-  * **App not loading on `localhost:9080`:**
-      * Ensure `aio app run` is running and no other process is using port 9080.
-      * Check your browser's console for any JavaScript errors.
-      * Verify your `.env` file is correctly populated.
-  * **Actions failing on Adobe I/O Runtime:**
-      * Check the Adobe I/O Runtime logs for your actions using `aio app logs`.
-      * Verify your `manifest.yml` action definitions are correct.
-      * Ensure all required environment variables for your actions are set in `.env` or in the Adobe I/O Console.
-  * **Magento Admin UI SDK menu not appearing:**
-      * Confirm all prerequisites under "Development With Adobe Commerce" are met.
-      * Verify `aio app dev` is running inside the Magento container.
-      * Ensure the `Admin UI SDK` configuration in Adobe Commerce admin is saved and integrations are refreshed.
-      * Clear Magento cache if necessary.
+- **App not loading on `localhost:9080`:**
+  - Ensure `aio app run` is running and no other process is using port 9080.
+  - Check your browser's console for any JavaScript errors.
+  - Verify your `.env` file is correctly populated.
+- **Actions failing on Adobe I/O Runtime:**
+  - Check the Adobe I/O Runtime logs for your actions using `aio app logs`.
+  - Verify your `manifest.yml` action definitions are correct.
+  - Ensure all required environment variables for your actions are set in `.env` or in the Adobe I/O Console.
+- **Magento Admin UI SDK menu not appearing:**
+  - Confirm all prerequisites under "Development With Adobe Commerce" are met.
+  - Verify `aio app dev` is running inside the Magento container.
+  - Ensure the `Admin UI SDK` configuration in Adobe Commerce admin is saved and integrations are refreshed.
+  - Clear Magento cache if necessary.
 
 ## Contributing
 
