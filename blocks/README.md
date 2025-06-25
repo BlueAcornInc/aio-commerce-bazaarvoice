@@ -16,14 +16,10 @@ This guide assumes you have a compatible Edge Delivery Services installation alr
 |-----------------------|---------------------------------------|
 | bazaarvoice-config-url| https://xxxxxx-bazaarvoice-stage.adobeioruntime.net/api/v1/web/aio-commerce-bazaarvoice-app/bazaarvoice-config |
 
+This value can be found when you deploy the app in the deployment output in the console.
 
-4. In your _content repository_ such as https://da.live/, find the page you want to bring the blocks into. Publish when completed!
+4. In your _content repository_ such as https://da.live/, navigate to the `<store>/products/default` document, and create a block named `bazaarvoice`, like so:
 
-   We suggest the [products/default](https://da.live/edit#/blueacorninc/shop-bazaarvoice/products/default) document, which can be added by pasting in the table below:
-
-   | bazaarvoice |
-   | ----------- |
-
-   The block may also be added in the interface by creating block and naming it `bazaarvoice`.
+![Document Block Example](../.github/img/da-block-example.png)
 
 5. Test your storefront and ensure reviews are showing up correctly. Be sure to configure the integration in the Adobe Commerce Admin.
