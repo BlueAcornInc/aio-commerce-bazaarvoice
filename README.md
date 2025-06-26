@@ -15,7 +15,6 @@ This Adobe App Builder extension provides a secure and efficient way for Adobe C
 - [Development](#development)
 - [Support](#support)
 - [Contributing](#contributing)
-- [License](#license)
 
 ---
 
