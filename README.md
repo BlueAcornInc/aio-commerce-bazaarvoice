@@ -183,7 +183,7 @@ Once the App Builder application is deployed and its settings are configured in 
 
 **Adobe Commerce Storefont and Edge Delivery Services Blocks**
 
-Refer to the [blocks setup instructions](./blocks/README.md) to set this up in Adobe Commerce Storefront and Edge Delivery Services.
+Refer to the [EDS and Storefront Blocks Setup Instructions](EDS.md) to set this up in Adobe Commerce Storefront and Edge Delivery Services.
 
 **Example Frontend API Call (Conceptual):**
 
