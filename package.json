@@ -1,6 +1,6 @@
 {
-  "name": "bzaarvoice",
-  "version": "1.0.1",
+  "name": "bazaarvoice",
+  "version": "1.0.2",
   "private": true,
   "dependencies": {
     "@adobe/aio-cli": "^10.3.2",
