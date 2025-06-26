@@ -221,11 +221,11 @@ The App Builder action serves as a secure intermediary. While it retrieves sensi
 
 ---
 
-## Development^1^
+## Development
 
 For detailed instructions on setting up your development environment, testing, and contributing^2^ to this App Builder extension, please refer to our dedicated development guide:
 
-[**`doc/development.md`**](doc/development.md)
+[**`doc/development.md`**](DEVELOPMENT.md)
 
 ---
 
