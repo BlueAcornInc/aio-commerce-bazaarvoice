@@ -183,35 +183,37 @@ Once the App Builder application is deployed and its settings are configured in 
 
 **Adobe Commerce Storefont and Edge Delivery Services Blocks**
 
-Refer to the [EDS and Storefront Blocks Setup Instructions](EDS.md) to set this up in Adobe Commerce Storefront and Edge Delivery Services.
+Refer to the EDS and Storefront Blocks Setup Instructions to set this up in Adobe Commerce Storefront and Edge Delivery Services:
+
+[**`EDS.md`**](EDS.md)
 
 **Example Frontend API Call (Conceptual):**
 
 Your frontend application will make an AJAX or Fetch request to the App Builder endpoint exposed by this extension. The specific URL will be available in your Adobe Developer Console for the deployed action.
 
-JavaScript
+JavaScript:
 
-```
+```js
 // Example: Fetching Bazaarvoice configuration from the App Builder API
 const fetchBazaarvoiceConfig = async () => {
-    try {
-        // Replace with your actual deployed App Builder action URL
-        const appBuilderApiUrl = 'https://adobeio-static.net/api/v1/web/your_org_id/your_project_id/your_workspace_id/bazaarvoice-config'; // Adjust endpoint name if needed
+  try {
+    // Replace with your actual deployed App Builder action URL
+    const appBuilderApiUrl =
+      "https://adobeio-static.net/api/v1/web/your_org_id/your_project_id/your_workspace_id/bazaarvoice-config"; // Adjust endpoint name if needed
 
-        const response = await fetch(appBuilderApiUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const config = await response.json();
-        console.log('Bazaarvoice Configuration:', config);
-        // Use config.bvApiKey, config.bvSharedSecret, config.bvClientName, etc., as provided by the API
-    } catch (error) {
-        console.error('Error fetching Bazaarvoice configuration:', error);
+    const response = await fetch(appBuilderApiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const config = await response.json();
+    console.log("Bazaarvoice Configuration:", config);
+    // Use config.bvApiKey, config.bvSharedSecret, config.bvClientName, etc., as provided by the API
+  } catch (error) {
+    console.error("Error fetching Bazaarvoice configuration:", error);
+  }
 };
 
 fetchBazaarvoiceConfig();
-
 ```
 
 **Important Security Note:**
@@ -222,7 +224,7 @@ The App Builder action serves as a secure intermediary. While it retrieves sensi
 
 ## Development
 
-For detailed instructions on setting up your development environment, testing, and contributing^2^ to this App Builder extension, please refer to our dedicated development guide.
+For detailed instructions on setting up your development environment, testing, and contributing to this App Builder extension, please refer to our dedicated development guide.
 
 [**`DEVELOPMENT.md`**](DEVELOPMENT.md)
 
