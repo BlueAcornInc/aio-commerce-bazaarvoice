@@ -222,9 +222,9 @@ The App Builder action serves as a secure intermediary. While it retrieves sensi
 
 ## Development
 
-For detailed instructions on setting up your development environment, testing, and contributing^2^ to this App Builder extension, please refer to our dedicated development guide:
+For detailed instructions on setting up your development environment, testing, and contributing^2^ to this App Builder extension, please refer to our dedicated development guide.
 
-[**`doc/development.md`**](DEVELOPMENT.md)
+[**`DEVELOPMENT.md`**](DEVELOPMENT.md)
 
 ---
 
