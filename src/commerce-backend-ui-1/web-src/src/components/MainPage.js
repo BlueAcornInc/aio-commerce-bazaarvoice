@@ -9,9 +9,6 @@ export const MainPage = (props) => {
   const [imsOrgId, setImsOrgId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const namespace = process.env.AIO_runtime_namespace;
-  const actionUrl = `https://${namespace}.adobeioruntime.net/api/v1/web/bazaar-voice/`;
-
   useEffect(() => {
     // Load IMS token for calling require-adobe-auth: true actions
     const loadImsInfo = async () => {
@@ -39,11 +36,7 @@ export const MainPage = (props) => {
   }, []);
 
   return !isLoading ? (
-    <BazaarvoiceConfigForm
-      actionUrl={actionUrl}
-      imsToken={imsToken}
-      imsOrgId={imsOrgId}
-    />
+    <BazaarvoiceConfigForm imsToken={imsToken} imsOrgId={imsOrgId} />
   ) : (
     <View></View>
   );

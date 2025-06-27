@@ -55,11 +55,11 @@ Before installing this extension, ensure you have the following:
 
 ## Installation
 
-You can install this extension either by downloading it directly or through the Adobe Exchange Marketplace.
+You can install this extension either by downloading it directly from the repository or from the Adobe Exchange marketplace.
 
-### Via Download
+### Downloading the latest release
 
-1.  **Download the Extension:** Get the latest release package from the [release page/repository URL here].
+1.  **Download the Extension:** Get the latest release package from the [release page](https://github.com/BlueAcornInc/aio-commerce-bazaarvoice/releases).
 2.  **Extract the Files:** Unzip the downloaded package to your preferred development directory. This directory contains the Adobe App Builder project.
 3.  **Configure App Builder Operational Environment Variables:** Before deploying, set the necessary environment variables for your App Builder actions as described in the [Environment Variables (App Builder Operational)](#environment-variables-app-builder-operational) section. These are critical for the App Builder app's ability to communicate with Adobe Commerce and perform internal encryption. You can do this by creating a `.env` file in the root of the extracted App Builder project.
 4.  **Deploy App Builder Actions:**
@@ -116,11 +116,6 @@ All Bazaarvoice-specific configurations for this extension are managed by the me
     - **SEO Key:** Provide the SEO key used for Bazaarvoice integration.
     - **BV Pixel:** Select `Yes` or `No` to enable or disable the Bazaarvoice Pixel for analytics tracking.
     - **Debug Mode:** Select `Yes` or `No` to enable or disable debug output from the Bazaarvoice integration.
-    - **SFTP Host:** Enter the SFTP host address for product feed uploads to Bazaarvoice.
-    - **SFTP Username:** Enter the username for SFTP authentication.
-    - **SFTP Password:** Enter the password for SFTP authentication.
-    - **Bazaarvoice API Key:** Your Bazaarvoice API Key.
-    - **Bazaarvoice Shared Secret:** Your Bazaarvoice Shared Secret.
 3.  **Save Configuration:** Click "**Save Config**" to apply your changes in Adobe Commerce.
 4.  **Verify Functionality:** After configuration, test your frontend integration to ensure the App Builder app is correctly retrieving and utilizing the Bazaarvoice settings.
 
