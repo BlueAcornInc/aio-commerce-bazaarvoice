@@ -168,45 +168,6 @@ export default function BazaarvoiceConfigForm(props) {
           <Item key="no">No</Item>
         </Picker>
 
-        {/*
-        <TextField
-          label="SFTP Username"
-          value={formState.sftpUsername}
-          onChange={(val) => handleChange("sftpUsername", val)}
-          isDisabled={loadHasError}
-        />
-
-        <TextField
-          label="SFTP Password"
-          value={formState.sftpPassword}
-          onChange={(val) => handleChange("sftpPassword", val)}
-          type="password"
-          isDisabled={loadHasError}
-        />
-
-        <TextField
-          label="SFTP Host Name"
-          value={formState.sftpHostName}
-          onChange={(val) => handleChange("sftpHostName", val)}
-          isDisabled={loadHasError}
-        />
-
-        <TextField
-          label="Product Feed Filename"
-          value={formState.productFeedFilename}
-          onChange={(val) => handleChange("productFeedFilename", val)}
-          isDisabled={loadHasError}
-        />
-
-        <TextField
-          label="Product Feed Export Path"
-          value={formState.productFeedExportPath}
-          onChange={(val) => handleChange("productFeedExportPath", val)}
-          isDisabled={loadHasError}
-        />
-
-        */}
-
         <Button variant="accent" onPress={handleSave} isDisabled={loadHasError}>
           Save
         </Button>
