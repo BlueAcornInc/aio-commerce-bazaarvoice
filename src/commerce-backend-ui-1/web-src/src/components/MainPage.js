@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import BazaarvoiceConfigForm from "./BazaarvoiceConfigForm";
 import { EXTENSION_ID } from "../constants";
 import { View } from "@adobe/react-spectrum";
+import config from "../config.json";
 
 export const MainPage = (props) => {
   const [imsToken, setImsToken] = useState(null);
   const [imsOrgId, setImsOrgId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const namespace = process.env.AIO_runtime_namespace;
-  const actionUrl = `https://${namespace}.adobeioruntime.net/api/v1/web/bazaar-voice/`;
-
+  const actionUrl = config['admin-ui-sdk/config'];
+  
   useEffect(() => {
     // Load IMS token for calling require-adobe-auth: true actions
     const loadImsInfo = async () => {
