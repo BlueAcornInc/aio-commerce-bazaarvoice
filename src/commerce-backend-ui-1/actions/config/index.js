@@ -84,7 +84,7 @@ async function main(params) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           success: true,
-          message: "Loaded ShipStation config",
+          message: "Loaded BaazarVoice config",
           config: loadedConfig,
         }),
       };
