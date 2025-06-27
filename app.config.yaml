@@ -14,7 +14,7 @@ application:
               ENCRYPTION_IV: $ENCRYPTION_IV
               RUNTIME_NAMESPACE: $AIO_RUNTIME_NAMESPACE
             annotations:
-              require-adobe-auth: true
+              require-adobe-auth: false
               final: true
 extensions:
   commerce/backend-ui/1:
