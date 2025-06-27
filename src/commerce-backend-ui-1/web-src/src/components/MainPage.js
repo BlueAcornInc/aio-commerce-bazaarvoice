@@ -36,10 +36,7 @@ export const MainPage = (props) => {
   }, []);
 
   return !isLoading ? (
-    <BazaarvoiceConfigForm
-      imsToken={imsToken}
-      imsOrgId={imsOrgId}
-    />
+    <BazaarvoiceConfigForm imsToken={imsToken} imsOrgId={imsOrgId} />
   ) : (
     <View></View>
   );
