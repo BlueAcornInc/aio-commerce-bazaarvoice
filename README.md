@@ -55,7 +55,7 @@ Before installing this extension, ensure you have the following:
 
 ## Installation
 
-You can install this extension either by downloading it directly frmo the repository or from the Adobe Exchange marketplace.
+You can install this extension either by downloading it directly from the repository or from the Adobe Exchange marketplace.
 
 ### Downloading the latest release
 
