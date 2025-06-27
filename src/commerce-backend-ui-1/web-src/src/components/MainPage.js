@@ -3,14 +3,11 @@ import { useEffect, useState } from "react";
 import BazaarvoiceConfigForm from "./BazaarvoiceConfigForm";
 import { EXTENSION_ID } from "../constants";
 import { View } from "@adobe/react-spectrum";
-import config from "../config.json";
 
 export const MainPage = (props) => {
   const [imsToken, setImsToken] = useState(null);
   const [imsOrgId, setImsOrgId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const actionUrl = config["admin-ui-sdk/config"];
 
   useEffect(() => {
     // Load IMS token for calling require-adobe-auth: true actions
@@ -40,7 +37,6 @@ export const MainPage = (props) => {
 
   return !isLoading ? (
     <BazaarvoiceConfigForm
-      actionUrl={actionUrl}
       imsToken={imsToken}
       imsOrgId={imsOrgId}
     />
