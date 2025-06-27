@@ -33,11 +33,6 @@ export default function BazaarvoiceConfigForm(props) {
     cloudSeoKey: "",
     enableBvPixel: "no",
     debug: "no",
-    /* sftpUsername: "",
-    sftpPassword: "",
-    sftpHostName: "",
-    productFeedFilename: "",
-    productFeedExportPath: "", */
   });
 
   const { statusMsg: loadStatusMsg, hasError: loadHasError } =
