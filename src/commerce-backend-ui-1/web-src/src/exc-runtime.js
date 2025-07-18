@@ -46,7 +46,7 @@ governing permissions and limitations under the License.
   t.EXC_US_HMR &&
     t.sessionStorage.setItem("unifiedShellMRScript", o.toString());
   let n = e.createElement("script");
-  (n.async = 1),
+  ((n.async = 1),
     (n.src = o.toString()),
     (n.onload = n.onreadystatechange =
       function () {
@@ -55,5 +55,5 @@ governing permissions and limitations under the License.
           (n = void 0),
           "EXC_MR_READY" in t && t.EXC_MR_READY());
       }),
-    e.head.appendChild(n);
+    e.head.appendChild(n));
 })(document, window);

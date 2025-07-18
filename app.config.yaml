@@ -7,7 +7,7 @@ application:
           api-get-config:
             function: src/actions/api/config/runtime/getConfig.js
             web: "yes"
-            runtime: "nodejs:18"
+            runtime: "nodejs:22"
             inputs:
               LOG_LEVEL: debug
               ENCRYPTION_KEY: $ENCRYPTION_KEY
