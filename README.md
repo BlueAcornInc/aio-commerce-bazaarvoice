@@ -63,8 +63,8 @@ You can install this extension either by downloading it directly from the reposi
 2.  **Extract the Files:** Unzip the downloaded package to your preferred development directory. This directory contains the Adobe App Builder project.
 3.  **Configure App Builder Operational Environment Variables:** Before deploying, set the necessary environment variables for your App Builder actions as described in the [Environment Variables (App Builder Operational)](#environment-variables-app-builder-operational) section. These are critical for the App Builder app's ability to communicate with Adobe Commerce and perform internal encryption. You can do this by creating a `.env` file in the root of the extracted App Builder project.
 4.  **Deploy App Builder Actions:**
-
-    - Navigate to the root directory of the extracted App Builder project (where the `app.json` or `manifest.yml` file is located).
+    - Navigate to the root directory of the extracted App Builder project (where the `app.config.yaml` file is located).
+    - Install npm dependencies using `npm install`
     - **(Optional) Set App Builder Context:** To avoid interactive prompts during deployment, you can explicitly set your project and workspace using `aio app use`:
 
       Bash
@@ -75,6 +75,17 @@ You can install this extension either by downloading it directly from the reposi
       ```
 
       (Replace `<your-project-id>` and `<your-workspace-name>` with your actual values, which you can find in the Adobe Developer Console.)
+
+      OR
+
+      You can use the following combination to select interactively your destination environment:
+
+      ```
+      aio console org select
+      aio console project select
+      aio console workspace select
+      aio app use --merge
+      ```
 
     - Deploy the App Builder actions using the Adobe I/O CLI:
 
@@ -128,7 +139,6 @@ These environment variables are crucial for the **operational functioning and se
 For **local development**, these are typically set in your `.env` file within your App Builder project. For **deployed environments (e.g., via Adobe Exchange Marketplace or CI/CD)**, these variables are configured directly within the Adobe Developer Console UI for your specific App Builder workspace/action, or provided via marketplace prompts during installation.
 
 - `ENCRYPTION_KEY`
-
   - **Description:** A 32-byte (64-character hexadecimal string) key used by the App Builder application for internal encryption operations, such as protecting sensitive configuration data retrieved from Adobe Commerce before processing or transmitting to the frontend.
   - **How to Generate:** You can generate a secure key using `openssl`:
 
@@ -147,7 +157,6 @@ For **local development**, these are typically set in your `.env` file within yo
     ```
 
 - `ENCRYPTION_IV`
-
   - **Description:** A 16-byte (32-character hexadecimal string) Initialization Vector (IV) used in conjunction with the `ENCRYPTION_KEY` for encryption.
   - **How to Generate:** You can generate a secure IV using `openssl`:
 

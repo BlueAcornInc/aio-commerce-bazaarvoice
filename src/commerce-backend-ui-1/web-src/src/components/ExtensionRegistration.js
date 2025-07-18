@@ -12,13 +12,17 @@ governing permissions and limitations under the License.
 import { register } from "@adobe/uix-guest";
 import { MainPage } from "./MainPage";
 import { EXTENSION_ID } from "../constants";
+import { useEffect } from "react";
 
 /**
  *
  * @param props
  */
 export default function ExtensionRegistration(props) {
-  init().catch(console.error);
+  useEffect(() => {
+    init().catch(console.error);
+  }, []);
+
   return <MainPage runtime={props.runtime} ims={props.ims} />;
 }
 
