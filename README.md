@@ -118,15 +118,15 @@ All Bazaarvoice-specific configurations for this extension are managed by the me
     - Log in to your Adobe Commerce Admin Panel.
     - Navigate to **Bazaarvoice > General Configuration** in the left-hand navigation menu.
 2.  **Configure Bazaarvoice Settings:** Fill in the following details using information provided by Bazaarvoice:
-    - **Enable/Disable Bazaarvoice Extension:** Select `Yes` or `No` to activate or deactivate the integration's functionality.
-    - **Environment:** Choose the Bazaarvoice environment your store connects to (e.g., `Staging`, `Production`).
-    - **Client Name:** Enter your unique Bazaarvoice client name.
-    - **Product Families:** Provide a comma-separated list of product families relevant to your Bazaarvoice implementation (e.g., `Electronics,Apparel,Books`).
+    - **Enable Bazaarvoice Extension:** (Required) Select `Yes` to activate the integration or `No` to deactivate it.
+    - **Environment:** (Required) Choose the Bazaarvoice environment your store connects to (`Staging` or `Production`).
+    - **Client Name:** (Required) Enter your unique Bazaarvoice client name.
+    - **Enable BV Product Families:** Select `Yes` to enable the use of Bazaarvoice Product Families.
     - **Deployment Zone:** Specify the Bazaarvoice deployment zone (e.g., `main_site`, `mobile_site`).
     - **Locale:** Enter the default locale for Bazaarvoice content (e.g., `en_US`, `fr_CA`).
-    - **SEO Key:** Provide the SEO key used for Bazaarvoice integration.
-    - **BV Pixel:** Select `Yes` or `No` to enable or disable the Bazaarvoice Pixel for analytics tracking.
-    - **Debug Mode:** Select `Yes` or `No` to enable or disable debug output from the Bazaarvoice integration.
+    - **Cloud SEO Key:** Provide the Cloud SEO key for your Bazaarvoice integration.
+    - **Enable BV Pixel:** Select `Yes` to enable the Bazaarvoice Pixel for analytics tracking.
+    - **Debug:** Select `Yes` to enable debug output from the Bazaarvoice integration.
 3.  **Save Configuration:** Click "**Save Config**" to apply your changes in Adobe Commerce.
 4.  **Verify Functionality:** After configuration, test your frontend integration to ensure the App Builder app is correctly retrieving and utilizing the Bazaarvoice settings.
 
