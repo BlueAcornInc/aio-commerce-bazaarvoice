@@ -42,7 +42,7 @@ module.exports = {
       },
     },
     {
-      files: ["web-src/**/*.js", "web-src/**/*.jsx"],
+      files: ["**/web-src/**/*.js", "**/web-src/**/*.jsx"],
       env: {
         browser: true,
         node: false,
