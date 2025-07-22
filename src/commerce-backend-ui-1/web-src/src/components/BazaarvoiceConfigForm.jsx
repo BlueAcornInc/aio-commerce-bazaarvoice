@@ -14,7 +14,7 @@ import {
 import {
   useBazaarvoiceConfigLoader,
   useBazaarvoiceConfigSaver,
-} from "../hooks/useBaazarVoiceConfig";
+} from "../hooks/useBazaarVoiceConfig";
 
 const DEBUG = false;
 

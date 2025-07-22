@@ -63,8 +63,8 @@ You can install this extension either by downloading it directly from the reposi
 2.  **Extract the Files:** Unzip the downloaded package to your preferred development directory. This directory contains the Adobe App Builder project.
 3.  **Configure App Builder Operational Environment Variables:** Before deploying, set the necessary environment variables for your App Builder actions as described in the [Environment Variables (App Builder Operational)](#environment-variables-app-builder-operational) section. These are critical for the App Builder app's ability to communicate with Adobe Commerce and perform internal encryption. You can do this by creating a `.env` file in the root of the extracted App Builder project.
 4.  **Deploy App Builder Actions:**
-
-    - Navigate to the root directory of the extracted App Builder project (where the `app.json` or `manifest.yml` file is located).
+    - Navigate to the root directory of the extracted App Builder project (where the `app.config.yaml` file is located).
+    - Install npm dependencies using `npm install`
     - **(Optional) Set App Builder Context:** To avoid interactive prompts during deployment, you can explicitly set your project and workspace using `aio app use`:
 
       Bash
@@ -75,6 +75,17 @@ You can install this extension either by downloading it directly from the reposi
       ```
 
       (Replace `<your-project-id>` and `<your-workspace-name>` with your actual values, which you can find in the Adobe Developer Console.)
+
+      OR
+
+      You can use the following combination to select interactively your destination environment:
+
+      ```
+      aio console org select
+      aio console project select
+      aio console workspace select
+      aio app use --merge
+      ```
 
     - Deploy the App Builder actions using the Adobe I/O CLI:
 
@@ -107,15 +118,15 @@ All Bazaarvoice-specific configurations for this extension are managed by the me
     - Log in to your Adobe Commerce Admin Panel.
     - Navigate to **Bazaarvoice > General Configuration** in the left-hand navigation menu.
 2.  **Configure Bazaarvoice Settings:** Fill in the following details using information provided by Bazaarvoice:
-    - **Enable/Disable Bazaarvoice Extension:** Select `Yes` or `No` to activate or deactivate the integration's functionality.
-    - **Environment:** Choose the Bazaarvoice environment your store connects to (e.g., `Staging`, `Production`).
-    - **Client Name:** Enter your unique Bazaarvoice client name.
-    - **Product Families:** Provide a comma-separated list of product families relevant to your Bazaarvoice implementation (e.g., `Electronics,Apparel,Books`).
+    - **Enable Bazaarvoice Extension:** (Required) Select `Yes` to activate the integration or `No` to deactivate it.
+    - **Environment:** (Required) Choose the Bazaarvoice environment your store connects to (`Staging` or `Production`).
+    - **Client Name:** (Required) Enter your unique Bazaarvoice client name.
+    - **Enable BV Product Families:** Select `Yes` to enable the use of Bazaarvoice Product Families.
     - **Deployment Zone:** Specify the Bazaarvoice deployment zone (e.g., `main_site`, `mobile_site`).
     - **Locale:** Enter the default locale for Bazaarvoice content (e.g., `en_US`, `fr_CA`).
-    - **SEO Key:** Provide the SEO key used for Bazaarvoice integration.
-    - **BV Pixel:** Select `Yes` or `No` to enable or disable the Bazaarvoice Pixel for analytics tracking.
-    - **Debug Mode:** Select `Yes` or `No` to enable or disable debug output from the Bazaarvoice integration.
+    - **Cloud SEO Key:** Provide the Cloud SEO key for your Bazaarvoice integration.
+    - **Enable BV Pixel:** Select `Yes` to enable the Bazaarvoice Pixel for analytics tracking.
+    - **Debug:** Select `Yes` to enable debug output from the Bazaarvoice integration.
 3.  **Save Configuration:** Click "**Save Config**" to apply your changes in Adobe Commerce.
 4.  **Verify Functionality:** After configuration, test your frontend integration to ensure the App Builder app is correctly retrieving and utilizing the Bazaarvoice settings.
 
@@ -128,7 +139,6 @@ These environment variables are crucial for the **operational functioning and se
 For **local development**, these are typically set in your `.env` file within your App Builder project. For **deployed environments (e.g., via Adobe Exchange Marketplace or CI/CD)**, these variables are configured directly within the Adobe Developer Console UI for your specific App Builder workspace/action, or provided via marketplace prompts during installation.
 
 - `ENCRYPTION_KEY`
-
   - **Description:** A 32-byte (64-character hexadecimal string) key used by the App Builder application for internal encryption operations, such as protecting sensitive configuration data retrieved from Adobe Commerce before processing or transmitting to the frontend.
   - **How to Generate:** You can generate a secure key using `openssl`:
 
@@ -147,7 +157,6 @@ For **local development**, these are typically set in your `.env` file within yo
     ```
 
 - `ENCRYPTION_IV`
-
   - **Description:** A 16-byte (32-character hexadecimal string) Initialization Vector (IV) used in conjunction with the `ENCRYPTION_KEY` for encryption.
   - **How to Generate:** You can generate a secure IV using `openssl`:
 
