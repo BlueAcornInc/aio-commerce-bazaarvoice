@@ -73,6 +73,7 @@ async function main(params) {
         body: JSON.stringify({
           success: false,
           message: "Error while saving configuration",
+          error: error || "Unknown error",
         }),
       };
     }
@@ -96,6 +97,7 @@ async function main(params) {
         body: JSON.stringify({
           success: false,
           message: "Error while loading configuration",
+          error: error || "Unknown error",
         }),
       };
     }
