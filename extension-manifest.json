@@ -1,8 +1,8 @@
 {
   "name": "Bazaarvoice",
   "displayName": "Bazaarvoice",
-  "description": "Bazaarvoice for Adobe Commerce",
+  "description": "Bazaarvoice ratings, reviews and Q&A for Adobe Commerce, configured through App Management",
   "platform": "web",
   "id": "Bazaarvoice",
-  "version": "1.0.5"
+  "version": "2.0.0"
 }
