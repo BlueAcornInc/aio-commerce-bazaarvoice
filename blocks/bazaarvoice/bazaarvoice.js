@@ -41,8 +41,10 @@ export default async function decorate(block) {
       return response.json();
     })
     .then((data) => {
-      config.data = data?.config;
-      config.loaderScriptUrl = `${config?.baseUrl}/${data?.config?.clientName}/${data?.config?.deploymentZone}/${data?.config?.environment}/${data?.config?.locale}/bv.js`;
+      // The config action returns its fields at the top level.
+      const bvConfig = data?.config ?? data;
+      config.data = bvConfig;
+      config.loaderScriptUrl = `${config?.baseUrl}/${bvConfig?.clientName}/${bvConfig?.deploymentZone}/${bvConfig?.environment}/${bvConfig?.locale}/bv.js`;
       addLoaderScript(config);
     })
     .catch((error) => {

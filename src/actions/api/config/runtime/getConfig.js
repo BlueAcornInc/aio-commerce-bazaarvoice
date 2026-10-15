@@ -1,6 +1,7 @@
 const { Core } = require("@adobe/aio-sdk");
 const logger = Core.Logger("getConfig", { level: "info" });
 const { readConfiguration } = require("../../../../shared/configurationHelper");
+const { toPublicConfig } = require("../../../../shared/publicConfig");
 
 /**
  *
@@ -11,11 +12,11 @@ async function main(params) {
   try {
     const config = await readConfiguration(params, "baazarvoice");
 
-    // Log and return the decrypted configuration
+    // Public endpoint: return only the storefront-safe fields.
     logger.info("Configuration retrieved successfully.");
     return {
       statusCode: 200,
-      body: config,
+      body: toPublicConfig(config),
     };
   } catch (error) {
     if (error.code === "ERROR_FILE_NOT_EXISTS" || error.code === "ENOENT") {

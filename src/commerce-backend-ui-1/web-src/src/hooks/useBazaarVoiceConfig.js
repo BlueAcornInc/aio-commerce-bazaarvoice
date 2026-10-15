@@ -18,7 +18,14 @@ export function useBazaarvoiceConfigLoader(props, setFormState) {
       try {
         const data = await callAction(props, "admin-ui-sdk/config", "GET");
         if (data) {
-          setFormState((prevState) => ({ ...prevState, ...data.config }));
+          // The Cloud SEO key is write-only: the action never returns it.
+          const { hasCloudSeoKey, ...config } = data.config || {};
+          setFormState((prevState) => ({
+            ...prevState,
+            ...config,
+            cloudSeoKey: "",
+            hasCloudSeoKey,
+          }));
         }
         setStatusMsg("Config loaded successfully");
         setHasError(false);

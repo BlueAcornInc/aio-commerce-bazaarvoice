@@ -3,6 +3,39 @@ const {
   readConfiguration,
   writeConfiguration,
 } = require("../../../shared/configurationHelper");
+const { toPublicConfig } = require("../../../shared/publicConfig");
+
+const REQUIRED_FIELDS = ["enableExtension", "environment", "clientName"];
+
+/**
+ * The configuration the admin UI may see: public fields, plus whether a
+ * Cloud SEO key is stored. The key itself is never returned.
+ *
+ * @param {object} config Stored configuration
+ * @returns {object} Configuration safe to return to the browser
+ */
+function toAdminConfig(config = {}) {
+  return {
+    ...toPublicConfig(config),
+    hasCloudSeoKey: Boolean(config.cloudSeoKey),
+  };
+}
+
+/**
+ * Read the stored Cloud SEO key, if any, so a save without a new key keeps it.
+ *
+ * @param {object} params Action params
+ * @param {string} name Configuration name
+ * @returns {Promise<string|undefined>} The stored key, or undefined
+ */
+async function readStoredCloudSeoKey(params, name) {
+  try {
+    const existing = await readConfiguration(params, name);
+    return existing?.cloudSeoKey;
+  } catch {
+    return undefined;
+  }
+}
 
 /**
  * Main admin action
@@ -16,6 +49,21 @@ async function main(params) {
 
   // Check the method
   if (params.__ow_method === "post") {
+    const payload = params.payload || {};
+    const missing = REQUIRED_FIELDS.filter((field) => !payload[field]);
+
+    if (missing.length > 0) {
+      // Field names only: params carries credentials and is never logged.
+      logger.warn(`Missing required fields: ${missing.join(", ")}`);
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          error: `Missing required fields (${missing.join(", ")}).`,
+        }),
+      };
+    }
+
     const {
       enableExtension,
       environment,
@@ -23,23 +71,12 @@ async function main(params) {
       enableProductFamilies,
       deploymentZone,
       locale,
-      cloudSeoKey,
       enableBvPixel,
       debug,
-    } = params.payload;
-
-    if (!enableExtension || !environment || !clientName) {
-      logger.error("Missing field for request", params);
-      return {
-        statusCode: 400,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          error:
-            "Missing required fields (enableExtension, environment, clientName).",
-          receivedParams: params,
-        }),
-      };
-    }
+    } = payload;
+    // Write-only key: a blank value keeps the stored one.
+    const cloudSeoKey =
+      payload.cloudSeoKey || (await readStoredCloudSeoKey(params, name));
 
     const configToStore = {
       enableExtension,
@@ -62,7 +99,7 @@ async function main(params) {
         body: JSON.stringify({
           success: true,
           message: "Saved BaazarVoice config",
-          savedConfig: configToStore,
+          savedConfig: toAdminConfig(configToStore),
         }),
       };
     } catch (error) {
@@ -73,7 +110,6 @@ async function main(params) {
         body: JSON.stringify({
           success: false,
           message: "Error while saving configuration",
-          error: error || "Unknown error",
         }),
       };
     }
@@ -86,7 +122,7 @@ async function main(params) {
         body: JSON.stringify({
           success: true,
           message: "Loaded BaazarVoice config",
-          config: loadedConfig,
+          config: toAdminConfig(loadedConfig),
         }),
       };
     } catch (error) {
@@ -97,7 +133,6 @@ async function main(params) {
         body: JSON.stringify({
           success: false,
           message: "Error while loading configuration",
-          error: error || "Unknown error",
         }),
       };
     }
