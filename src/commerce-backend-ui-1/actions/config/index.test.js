@@ -60,10 +60,33 @@ describe("Admin Main Action", () => {
       expect(response.headers["Content-Type"]).toBe("application/json");
       const body = JSON.parse(response.body);
       expect(body.error).toContain("Missing required fields");
-      expect(mockLogger.error).toHaveBeenCalledWith(
-        "Missing field for request",
-        params,
+      expect(mockLogger.warn).toHaveBeenCalledWith(
+        "Missing required fields: enableExtension, clientName",
       );
+    });
+
+    test("should never echo or log action params on a bad request", async () => {
+      // Distinctive marker values, so a leak anywhere is easy to detect.
+      const marker = (name) => `${name}-must-not-leak`;
+      const params = {
+        __ow_method: "post",
+        __ow_headers: { authorization: `Bearer ${marker("ims")}` },
+        ENCRYPTION_KEY: marker("key"),
+        ENCRYPTION_IV: marker("iv"),
+        payload: { cloudSeoKey: marker("seo") },
+      };
+
+      const response = await main(params);
+
+      expect(response.statusCode).toBe(400);
+      const logged = JSON.stringify(
+        Object.values(mockLogger).flatMap((fn) => fn.mock.calls),
+      );
+      ["ims", "key", "iv", "seo"].map(marker).forEach((value) => {
+        expect(response.body).not.toContain(value);
+        expect(logged).not.toContain(value);
+      });
+      expect(JSON.parse(response.body).receivedParams).toBeUndefined();
     });
 
     test("should successfully save configuration and return 200", async () => {
@@ -93,13 +116,67 @@ describe("Admin Main Action", () => {
       const body = JSON.parse(response.body);
       expect(body.success).toBe(true);
       expect(body.message).toBe("Saved BaazarVoice config");
-      expect(body.savedConfig).toEqual(mockPayload);
+      expect(response.body).not.toContain("someKey");
+      expect(body.savedConfig).toEqual({
+        enableExtension: true,
+        environment: "staging",
+        clientName: "testClient",
+        enableProductFamilies: true,
+        deploymentZone: "US",
+        locale: "en_US",
+        enableBvPixel: false,
+        debug: true,
+        hasCloudSeoKey: true,
+      });
       expect(mockWriteConfiguration).toHaveBeenCalledWith(
         mockPayload,
         "baazarvoice",
         params,
       );
       expect(mockLogger.error).not.toHaveBeenCalled();
+    });
+
+    test("should keep the stored Cloud SEO key when the payload leaves it blank", async () => {
+      const params = {
+        __ow_method: "post",
+        payload: {
+          enableExtension: true,
+          environment: "staging",
+          clientName: "testClient",
+          cloudSeoKey: "",
+        },
+      };
+      mockReadConfiguration.mockResolvedValueOnce({
+        clientName: "testClient",
+        cloudSeoKey: "storedKey",
+      });
+      mockWriteConfiguration.mockResolvedValueOnce();
+
+      const response = await main(params);
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body).not.toContain("storedKey");
+      expect(mockWriteConfiguration.mock.calls[0][0].cloudSeoKey).toBe(
+        "storedKey",
+      );
+    });
+
+    test("should not return error details on a failed save", async () => {
+      mockWriteConfiguration.mockRejectedValueOnce(
+        Object.assign(new Error("boom"), { detail: "internal" }),
+      );
+
+      const response = await main({
+        __ow_method: "post",
+        payload: {
+          enableExtension: true,
+          environment: "staging",
+          clientName: "testClient",
+        },
+      });
+
+      expect(response.statusCode).toBe(500);
+      expect(JSON.parse(response.body).error).toBeUndefined();
     });
 
     test("should return 500 if writeConfiguration fails", async () => {
@@ -150,7 +227,10 @@ describe("Admin Main Action", () => {
       const body = JSON.parse(response.body);
       expect(body.success).toBe(true);
       expect(body.message).toBe("Loaded BaazarVoice config");
-      expect(body.config).toEqual(mockLoadedConfig);
+      expect(body.config).toEqual({
+        ...mockLoadedConfig,
+        hasCloudSeoKey: false,
+      });
       expect(mockReadConfiguration).toHaveBeenCalledWith(params, "baazarvoice");
       expect(mockLogger.error).not.toHaveBeenCalled();
     });

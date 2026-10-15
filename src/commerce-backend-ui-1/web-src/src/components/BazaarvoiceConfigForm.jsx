@@ -49,7 +49,8 @@ export default function BazaarvoiceConfigForm(props) {
   };
 
   const handleSave = async () => {
-    saveConfig(formState);
+    const { hasCloudSeoKey, ...config } = formState;
+    saveConfig(config);
   };
 
   const links = [
@@ -143,8 +144,14 @@ export default function BazaarvoiceConfigForm(props) {
 
         <TextField
           label="Cloud SEO Key"
+          type="password"
           value={formState.cloudSeoKey}
           onChange={(val) => handleChange("cloudSeoKey", val)}
+          description={
+            formState.hasCloudSeoKey
+              ? "A key is saved. Leave blank to keep it."
+              : undefined
+          }
           isDisabled={loadHasError}
         />
 
