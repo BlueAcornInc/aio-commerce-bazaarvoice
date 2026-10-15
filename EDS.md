@@ -1,25 +1,24 @@
 # EDS and Storefront Blocks
 
-Blocks are how display reviews from within Edge Delivery Services and Adobe Commerce Storefront. They are easy to setup and configure, but require the app to be properly configured before they can work.
+Two blocks render Bazaarvoice on an Adobe Commerce storefront on Edge Delivery Services. Both read their settings from the app's public config action, so the app must be installed and configured in App Management first.
+
+| Block                 | Where                                        | Renders                                                                                      |
+| --------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `bazaarvoice`         | Product page template                        | Rating summary by the product title, the reviews widget, and questions and answers           |
+| `bazaarvoice-ratings` | Pages that list products (PLP, search, cart) | Inline ratings on product tiles; cart, mini-cart and cross-sell tiles follow the cart switch |
 
 ## Installation
 
-This guide assumes you have a compatible Edge Delivery Services installation already.
+1. Copy `blocks/bazaarvoice/` and `blocks/bazaarvoice-ratings/` into your storefront's `blocks/` directory. `bazaarvoice-ratings` imports helpers from `bazaarvoice/bv-common.js`, so install both.
 
-1. Copy the block directories in this `blocks/` directory into your storefront's `blocks` directory.
+2. Point the storefront at the app's public config action. With the drop-in config service, add under `public.default`:
 
-2. Commit and deploy these to your aem.page or aem.live instances to enable them.
+```
+"bazaarvoice-config-url": "https://<namespace>.adobeioruntime.net/api/v1/web/bazaarvoice/public-config"
+```
 
-3. In the _content repository_ `configs` and `configs-dev` sheets, add the following and publish:
+With the legacy `configs.json` sheets, add a `bazaarvoice-config-url` row with the same value. Use the stage workspace URL in the stage config and the production URL in the production config. The blocks send the storefront's store view code, so each store view gets the settings configured for its scope.
 
-| key                    | value                                                                                                          |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
-| bazaarvoice-config-url | https://xxxxxx-bazaarvoice-stage.adobeioruntime.net/api/v1/web/aio-commerce-bazaarvoice-app/bazaarvoice-config |
+3. In your content repository (for example https://da.live/), add a `bazaarvoice` block to the product page template (`<store>/products/default`), and a `bazaarvoice-ratings` block to the listing and cart pages.
 
-This value can be found when you deploy the app in the deployment output in the console.
-
-4. In your _content repository_ such as https://da.live/, navigate to the `<store>/products/default` document, and create a block named `bazaarvoice`, like so:
-
-![Document Block Example](.github/img/da-block-example.png)
-
-5. Test your storefront and ensure reviews are showing up correctly. Be sure to configure the integration in the Adobe Commerce Admin.
+4. Check a product page and a listing page. Each touchpoint can be switched on or off per scope in App Management.

@@ -9,8 +9,7 @@ This Adobe App Builder extension provides a secure and efficient way for Adobe C
 - [Installation](#installation)
   - [Via Download](#via-download)
   - [Via Adobe Exchange Marketplace](#via-adobe-exchange-marketplace)
-- [Configuration (Adobe Commerce Backend)](#configuration-adobe-commerce-backend)
-- [Environment Variables (App Builder Operational)](#environment-variables-app-builder-operational)
+- [Configuration (Adobe Commerce Backend)](#configuration-app-management)
 - [Usage](#usage)
 - [Development](#development)
 - [Support](#support)
@@ -61,7 +60,7 @@ You can install this extension either by downloading it directly from the reposi
 
 1.  **Download the Extension:** Get the latest release package from the [release page](https://github.com/BlueAcornInc/aio-commerce-bazaarvoice/releases).
 2.  **Extract the Files:** Unzip the downloaded package to your preferred development directory. This directory contains the Adobe App Builder project.
-3.  **Configure App Builder Operational Environment Variables:** Before deploying, set the necessary environment variables for your App Builder actions as described in the [Environment Variables (App Builder Operational)](#environment-variables-app-builder-operational) section. These are critical for the App Builder app's ability to communicate with Adobe Commerce and perform internal encryption. You can do this by creating a `.env` file in the root of the extracted App Builder project.
+3.  **Link your App Builder workspace:** run `aio app use` in the extracted project to select your organization, project and workspace. No encryption keys or other secrets are needed.
 4.  **Deploy App Builder Actions:**
     - Navigate to the root directory of the extracted App Builder project (where the `app.config.yaml` file is located).
     - Install npm dependencies using `npm install`
@@ -98,86 +97,34 @@ You can install this extension either by downloading it directly from the reposi
 
       If you didn't use `aio app use`, follow the prompts to select your App Builder project and workspace.
 
-5.  **Configure Bazaarvoice Settings in Adobe Commerce Backend:** After deploying the App Builder app, you **must** configure your Bazaarvoice settings in your Adobe Commerce Admin panel as described in the [Configuration (Adobe Commerce Backend)](#configuration-adobe-commerce-backend) section.
+5.  **Configure Bazaarvoice Settings in Adobe Commerce Backend:** After deploying the App Builder app, you **must** configure your Bazaarvoice settings in your Adobe Commerce Admin panel as described in the [Configuration (Adobe Commerce Backend)](#configuration-app-management) section.
 
 ### Via Adobe Exchange Marketplace
 
 1.  **Log in to Adobe Commerce Admin:** Access your Adobe Commerce admin panel.
 2.  **Navigate to System > Web Setup Wizard (or Component Manager in newer versions):**
 3.  **Find the Extension:** Search for "Bazaarvoice App Builder Extension" (or similar) in the Marketplace.
-4.  **Install the Extension:** Follow the on-screen instructions to install the extension. This process handles the deployment of the Adobe App Builder actions to your connected project. You **will be prompted** to provide values for the App Builder operational environment variables (e.g., `ENCRYPTION_KEY`, `ENCRYPTION_IV`) as listed in the [Environment Variables (App Builder Operational)](#environment-variables-app-builder-operational) section.
-5.  **Configure Bazaarvoice Settings in Adobe Commerce Backend:** After the marketplace installation is complete, proceed to configure all Bazaarvoice-specific settings within your Adobe Commerce Admin panel as detailed in the [Configuration (Adobe Commerce Backend)](#configuration-adobe-commerce-backend) section.
+4.  **Install the Extension:** Follow the on-screen instructions to install the extension. This deploys the Adobe App Builder actions to your connected project. No encryption keys are needed: the app stores no secrets. Then configure it as described in [Configuration (App Management)](#configuration-app-management).
+5.  **Configure Bazaarvoice Settings in Adobe Commerce Backend:** After the marketplace installation is complete, proceed to configure all Bazaarvoice-specific settings within your Adobe Commerce Admin panel as detailed in the [Configuration (Adobe Commerce Backend)](#configuration-app-management) section.
 
 ---
 
-## Configuration (Adobe Commerce Backend)
+## Configuration (App Management)
 
-All Bazaarvoice-specific configurations for this extension are managed by the merchant directly within the **Adobe Commerce Admin Panel**. The deployed Adobe App Builder application will then retrieve these settings at runtime via secure API calls to your Adobe Commerce instance.
+Since v2.0.0, Bazaarvoice is configured through **Adobe Commerce App Management**, not a custom admin page.
 
-1.  **Access Bazaarvoice Configuration in Adobe Commerce:**
-    - Log in to your Adobe Commerce Admin Panel.
-    - Navigate to **Bazaarvoice > General Configuration** in the left-hand navigation menu.
-2.  **Configure Bazaarvoice Settings:** Fill in the following details using information provided by Bazaarvoice:
-    - **Enable Bazaarvoice Extension:** (Required) Select `Yes` to activate the integration or `No` to deactivate it.
-    - **Environment:** (Required) Choose the Bazaarvoice environment your store connects to (`Staging` or `Production`).
-    - **Client Name:** (Required) Enter your unique Bazaarvoice client name.
-    - **Enable BV Product Families:** Select `Yes` to enable the use of Bazaarvoice Product Families.
-    - **Deployment Zone:** Specify the Bazaarvoice deployment zone (e.g., `main_site`, `mobile_site`).
-    - **Locale:** Enter the default locale for Bazaarvoice content (e.g., `en_US`, `fr_CA`).
-    - **Cloud SEO Key:** Provide the Cloud SEO key for your Bazaarvoice integration.
-    - **Enable BV Pixel:** Select `Yes` to enable the Bazaarvoice Pixel for analytics tracking.
-    - **Debug:** Select `Yes` to enable debug output from the Bazaarvoice integration.
-3.  **Save Configuration:** Click "**Save Config**" to apply your changes in Adobe Commerce.
-4.  **Verify Functionality:** After configuration, test your frontend integration to ensure the App Builder app is correctly retrieving and utilizing the Bazaarvoice settings.
+1.  **Install the app:** in Commerce Admin, go to **Apps > App Management** and install Bazaarvoice into your instance.
+2.  **Configure it** at the scope you need:
+    - **Status:** `On` to enable the storefront widgets.
+    - **Client Name**, **Deployment Zone** (for example `Main Site`), **Environment** (`staging` or `production`) and **Locale** (for example `en_US`): together these locate your `bv.js` deployment.
+    - **Touchpoint switches:** reviews widget, star summary, questions and answers, stars on product listings, stars in the cart, conversion tracking (not available yet). They match the Yotpo app's switches.
+3.  **Scopes:** values follow the Commerce hierarchy (global > website > store > store view) and are inherited downwards, so each brand or store view can point at its own Bazaarvoice deployment.
 
----
+The app stores **no secrets**, so it needs no encryption key.
 
-## Environment Variables (App Builder Operational)
+### Upgrading from v1.x
 
-These environment variables are crucial for the **operational functioning and security of the Adobe App Builder application itself**. They allow the App Builder to connect to your Adobe Commerce instance and perform internal data protection. These are **not** the Bazaarvoice-specific settings for your store, which are configured in the Adobe Commerce Admin.
-
-For **local development**, these are typically set in your `.env` file within your App Builder project. For **deployed environments (e.g., via Adobe Exchange Marketplace or CI/CD)**, these variables are configured directly within the Adobe Developer Console UI for your specific App Builder workspace/action, or provided via marketplace prompts during installation.
-
-- `ENCRYPTION_KEY`
-  - **Description:** A 32-byte (64-character hexadecimal string) key used by the App Builder application for internal encryption operations, such as protecting sensitive configuration data retrieved from Adobe Commerce before processing or transmitting to the frontend.
-  - **How to Generate:** You can generate a secure key using `openssl`:
-
-    Bash
-
-    ```
-    openssl rand -hex 32
-
-    ```
-
-  - **Example `.env` entry:**
-
-    ```
-    ENCRYPTION_KEY=a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2
-
-    ```
-
-- `ENCRYPTION_IV`
-  - **Description:** A 16-byte (32-character hexadecimal string) Initialization Vector (IV) used in conjunction with the `ENCRYPTION_KEY` for encryption.
-  - **How to Generate:** You can generate a secure IV using `openssl`:
-
-    Bash
-
-    ```
-    openssl rand -hex 16
-
-    ```
-
-  - **Example `.env` entry:**
-
-    ```
-    ENCRYPTION_IV=f1e2d3c4b5a69876543210fedcba9876
-
-    ```
-
-**Important Notes:**
-
-- **Security:** It's crucial to generate strong, unique values for `ENCRYPTION_KEY`, `ENCRYPTION_IV`
-- **Don't Commit `.env`:** If you're using a `.env` file for local development, **DO NOT commit it to your version control system (e.g., Git)**. Add `.env` to your `.gitignore` file to prevent accidental exposure of sensitive information.
+v1 stored its settings in a custom admin page that App Management doesn't read. After upgrading, re-enter the client name, deployment zone, environment, locale and status in App Management. The v1 "Cloud SEO Key", "Enable BV Pixel" and "Product Families" settings were never implemented and are removed; conversion tracking will return as the **Conversion tracking** switch.
 
 ---
 
